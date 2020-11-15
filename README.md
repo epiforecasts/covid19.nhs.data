@@ -1,7 +1,8 @@
 # Mapping local authorities to NHS Acute Trusts in England
 
+<br>
+
 ## Summary
-***
 
 This repo provides a many-to-many mapping between lower-tier local authority districts to NHS Acute Trusts in England, as defined by hospital locations and hospital admissions during the COVID-19 pandemic. This mapping can be used to match LTLA-level data, such as testing data, to hospital admissions and other related data that is typically provided at the Trust level.
 
@@ -15,21 +16,26 @@ The mapping contains the following variables:
 <br>
 
 ## Quick start
-***
 
-Load the raw mapping `get_mapping()`:
+Load the quick-start functions with `source("R/quick_start.R")`:
+
+```r
+source("R/quick_start.R")
+```
+
+Load the raw mapping with `get_mapping()`:
 
 ``` r
 get_mapping()
 ```
 
-Trust names and local authority names can be added to the raw mapping with `get_names()`:
+Add Trust names and local authority names to the raw mapping with `get_names()`:
 
 ``` r
 get_names(raw_map = get_mapping())
 ```
 
-Get a table and visual summary of the mapping for a given Trust (as defined by the Trust organisation code) with `summarise_mapping()`:
+Summarise the mapping for a given Trust (as defined by the Trust organisation code) with `summarise_mapping()`:
 
 ```r
 summarise_mapping(with_map = get_mapping(), for_trust = "r0a")
@@ -39,7 +45,6 @@ Please note that this mapping will not reflect Trust-LTLA pairs where `source ==
 <br>
 
 ## Methods
-***
 
 We aimed to create a COVID-19-specific mapping between NHS Acute Trusts and lower-tier local authority districts (LTLAs) where all Trusts are mapped to at least one LTLA and all LTLAs are mapped to at least one Trust.
 
