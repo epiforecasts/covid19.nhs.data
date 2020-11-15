@@ -1,6 +1,5 @@
 # Mapping local authorities to NHS Acute Trusts in England
 
-<br>
 
 ## Summary
 
@@ -13,7 +12,6 @@ The mapping contains the following variables:
 * `source`: the source of the mapping, one of `hospital_postcode`, `patient_postcode` (either CHESS or CO-CIN) or `utla_final_match`; details below.
 * `p`: the proportion of patients in a given Trust whose home address is in the given LTLA. This column is `NA` for `source = hospital_postcode` or `source = utla_final_match`.
 
-<br>
 
 ## Quick start
 
@@ -42,7 +40,7 @@ summarise_mapping(with_map = get_mapping(), for_trust = "r0a")
 ```
 Please note that this mapping will not reflect Trust-LTLA pairs where `source == "hospital_postcode"` or `source == "utla_final_match"`.
 
-<br>
+
 
 ## Methods
 
