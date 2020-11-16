@@ -60,7 +60,7 @@ The CHESS linelist contains patients' outcodes (the first half of a UK postcode)
 
 We use the R library [postcodeioR](https://cran.r-project.org/web/packages/PostcodesioR/index.html) to look up hospital or patient postcodes and return the corresponding LTLA code. All Trusts are mapped to at least one LTLA via their hospital postcodes, and can be mapped to additional LTLAs via patient postcodes from the CHESS and/or CO-CIN linelists.
 
-To preserve anonymity of patients, we remove any Trust-LTLA mapping made via patient postcodes where the number of matches is fewer than 5; this also serves the purpose of excluding patients who may have been admitted to hospital whilst away from their home address. We do not report the absolute number of patients per Trust-LTLA pair, but instead report the proportion (`p`).
+To preserve anonymity of patients, we remove any Trust-LTLA mapping made via patient postcodes where the number of matches is fewer than 5; this also serves the purpose of excluding patients who may have been admitted to hospital whilst away from their home address. We do not report the absolute number of patients per Trust-LTLA pair, but instead report the proportion, `p`, of patients admitted to a given Trust from the given LTLA.
 
 If, after mapping all available hospital and patient postcodes to their LTLAs, there are some LTLAs that have not yet been mapped to any Trusts, then these LTLAs are matched to NHS Trusts that have been mapped to other LTLAs in the same upper-tier local authority (UTLA).
 
