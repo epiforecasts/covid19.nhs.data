@@ -3,7 +3,7 @@
 
 ## Summary
 
-This repo provides a many-to-many mapping between lower-tier local authority districts to NHS Acute Trusts in England, as defined by hospital locations and hospital admissions during the COVID-19 pandemic. This mapping can be used to match LTLA-level data, such as testing data, to hospital admissions and other related data that is typically provided at the Trust level.
+This repo contains a many-to-many mapping between lower-tier local authority districts to NHS Acute Trusts in England, as defined by hospital locations and hospital admissions during the COVID-19 pandemic. This mapping can be used to match LTLA-level data, such as testing data, to hospital admissions and other related data that is typically provided at the Trust level.
 
 The mapping contains the following variables:
 
@@ -13,7 +13,12 @@ The mapping contains the following variables:
 * `p`: the proportion of patients in a given Trust whose home address is in the given LTLA. This column is `NA` for `source = hospital_postcode` or `source = utla_final_match`.
 
 
-## Quick start
+
+## Usage
+
+The mapping is provided as a `.csv` and `.rds` file. This can be loaded directly with `readRDS()` or `readr::read_csv()`, or using the quick-start functions, outlined below.
+
+### Quick start
 
 Load the quick-start functions with `source("R/quick_start.R")`:
 
