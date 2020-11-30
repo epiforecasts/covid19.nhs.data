@@ -23,7 +23,7 @@ The mapping is provided as a `.csv` and `.rds` file. This can be loaded directly
 Load the quick-start functions with `source("R/quick_start.R")`:
 
 ```r
-source("R/quick_start.R")
+source("R/mapping_quick_start.R")
 ```
 
 Load the raw mapping with `get_mapping()`:

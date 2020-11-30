@@ -69,9 +69,15 @@ get_england_shp <- function(){
 
 # Visualise mapping -------------------------------------------------------
 
-summarise_mapping <- function(with_map, for_trust){
+summarise_mapping <- function(with_map, with_shp = get_england_shp(), for_trust){
   
   for_trust <- tolower(for_trust)
+  
+  ## Pull Trust name
+  get_names(raw_map = get_mapping()) %>%
+    dplyr::filter(trust_code == for_trust) %>%
+    pull(trust_name) %>%
+    unique() -> plot_title
   
   ## Table summary of mapping
   tb <- with_map %>%
@@ -92,7 +98,8 @@ summarise_mapping <- function(with_map, for_trust){
     ggplot() +
     geom_sf(aes(fill = p), lwd = 0.3, col = "grey20") +
     scale_fill_distiller(palette = "OrRd", direction = 1, na.value = "grey85", limits = c(0, NA)) +
-    labs(fill = "% of Trust\nhospitalisations") +
+    labs(title = plot_title,
+         fill = "% of Trust\nhospitalisations") +
     theme_void() +
     theme(legend.position = "bottom", legend.justification = "left")
   
