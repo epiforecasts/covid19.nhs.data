@@ -5,7 +5,7 @@ require(tidyverse); require(sf)
 
 get_mapping <- function(simplify = FALSE, p_min = 0.01){
   
-  out <- readRDS(file = here::here("data", "trust_ltla_mapping_public.rds"))
+  out <- readRDS(file = here::here("data", "trust-ltla-mapping", "trust_ltla_mapping_public.rds"))
   
   if(simplify){
     
