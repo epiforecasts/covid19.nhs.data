@@ -1,5 +1,3 @@
-require(tidyverse); require(sf)
-
 
 # Load LTLA-Trust mapping -------------------------------------------------
 
@@ -103,7 +101,7 @@ summarise_mapping <- function(with_map, with_shp = get_england_shp(), for_trust)
     theme_void() +
     theme(legend.position = "bottom", legend.justification = "left")
   
-  return(list(table = tb, plot = g))
+  return(list(summary_table = tb, summary_plot = g))
   
 }
 
