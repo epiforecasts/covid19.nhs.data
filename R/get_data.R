@@ -49,8 +49,7 @@ download_trust_data <- function(release_date  = NULL){
     dplyr::bind_rows()
   
   
-  saveRDS(object = out, file = here::here("data", "raw", "nhs_statistics", paste0("trust_data_", release_date, ".rds")))
-  saveRDS(object = out, file = here::here("data", "raw", "nhs_statistics", paste0("trust_data_latest.rds")))
+  return(out)
   
 }
 

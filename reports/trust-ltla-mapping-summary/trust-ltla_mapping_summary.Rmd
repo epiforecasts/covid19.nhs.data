@@ -1,0 +1,98 @@
+---
+title: "Mapping local authorities to NHS Acute Trusts in England"
+author: "Sophie Meakin"
+output:
+  html_document:
+    theme: sandstone
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+
+library(tidyverse); library(sf)
+
+```
+
+# Summary
+
+This repo contains a many-to-many mapping between lower-tier local authority districts to NHS Acute Trusts in England, COVID-19 hospital admissions. This mapping can be used to match LTLA-level data, such as testing data, to hospital admissions and other related data that is typically provided at the Trust level.
+
+The mapping contains the following variables:
+
+* `trust_code`: the three-digit organisation code for NHS Trusts.
+* `ltla_code`: the nine-digit identifier (LTLA19CD) for lower-tier local authorities in England.
+* `p_trust`: the proportion of admissions to a given Trust were admitted from a given LTLA.
+* `p_ltla`: the proportion of admissions from a given LTLA that were admitted to a given Trust.
+
+
+# Usage
+
+The mapping is provided as a `.csv` and `.rds` file. This can be loaded directly with `readRDS()` or `readr::read_csv()`, or using the quick-start functions, outlined below.
+
+
+## Quick start
+
+Load the quick-start functions with `source("R/quick_start.R")`:
+
+```{r load_functions, eval = TRUE}
+
+source(here::here("R/mapping_quick_start.R"))
+
+```
+
+Load the raw mapping with `get_mapping()`:
+
+```{r load_raw_mapping, echo = TRUE, eval = TRUE}
+
+get_mapping() %>%
+  head() %>%
+  knitr::kable()
+
+```
+
+Add Trust names and lower-tier local authority names to the raw mapping with `get_names()`:
+
+```{r add_names, echo = TRUE, eval = TRUE}
+
+get_names(raw_map = get_mapping()) %>%
+  head() %>%
+  knitr::kable()
+
+```
+
+Summarise the mapping for a given Trust (as defined by the Trust organisation code) with `summarise_mapping()`; this will return a table (under `summary_table`) and a visualisation of the Trust-LTLA mapping (under `summary_plot`):
+
+```{r summarise for trust, echo = TRUE, eval = TRUE}
+
+summary <- summarise_mapping(with_map = get_mapping(), for_trust = "R0A")
+
+summary$summary_table %>%
+  knitr::kable()
+
+summary$summary_plot
+
+```
+
+Summarise the mapping for a given LTLA (as defined by the LTLA organisation code) with `summarise_mapping()`; this will return a table (under `summary_table`):
+
+```{r summarise for ltla, echo = TRUE, eval = TRUE}
+
+summary <- summarise_mapping(with_map = get_mapping(), for_ltla = "E09000012")
+
+summary$summary_table %>%
+  knitr::kable()
+
+```
+
+
+
+# Methods
+
+The raw (unpublished) mapping was provided by NHS England, This mapping provides the number of COVID-19 spells (discharges) between 01 January 2020 and 30 September 2020 by hospital-LTLA pairs, based on the Secondary Uses Service (SUS) healthcare data for England.
+
+We have summarised the raw mapping to Trust-LTLA (rather than hospital-LTLA) pairs, and to maintain anonymity we excluded any pair where the number of spells is less than 10. Finally, we report only the proprtion of admissions by Trust (`p_trust`) or LTLA (`p_ltla`).
+
+
