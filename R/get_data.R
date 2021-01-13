@@ -4,7 +4,10 @@
 ## Download and save daily Trust- and hospital-level admissions and occupancy data from:
 ## https://www.england.nhs.uk/statistics/statistical-work-areas/covid-19-hospital-activity/
 
-download_trust_data <- function(release_date = NULL){
+download_trust_data <- function(release_date = Sys.Date()){
+  
+  ## Revert to the last Thursday 
+  release_date <- lubridate::floor_date(release_date, unit = "week", week_start = 4)
   
   nhs_url <- paste0("https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/",
                     lubridate::year(release_date), "/",
@@ -14,6 +17,21 @@ download_trust_data <- function(release_date = NULL){
                     "/Weekly-covid-admissions-and-beds-publication-",
                     gsub("-", "", as.character(format.Date(release_date, format = "%y-%m-%d"))),
                     ".xlsx")
+  
+  if(!RCurl::url.exists(nhs_url)){
+    
+    ## Try last week data
+    release_date <- release_date - 7
+    nhs_url <- paste0("https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/",
+                      lubridate::year(release_date), "/",
+                      ifelse(lubridate::month(release_date)<10, 
+                             paste0(0,lubridate::month(release_date)),
+                             lubridate::month(release_date)),
+                      "/Weekly-covid-admissions-and-beds-publication-",
+                      gsub("-", "", as.character(format.Date(release_date, format = "%y-%m-%d"))),
+                      ".xlsx")
+    
+  }
   
   tmp <- file.path(tempdir(), "nhs.xlsx")
   download.file(nhs_url, destfile = tmp, mode = "wb")
@@ -62,7 +80,7 @@ download_trust_data <- function(release_date = NULL){
 
 ## Wrapper around downloading and reshaping Trust-level admissions data
 
-get_admissions_utla <- function(release_date = NULL){
+get_admissions_utla <- function(release_date = Sys.Date()){
   
   ## Load Trust-UTLA mapping
   trust_utla_map <- get_mapping()
