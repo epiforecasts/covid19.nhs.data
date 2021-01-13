@@ -83,7 +83,17 @@ download_trust_data <- function(release_date = Sys.Date()){
 get_admissions_utla <- function(release_date = Sys.Date()){
   
   ## Load Trust-UTLA mapping
-  trust_utla_map <- get_mapping()
+  mapping_url <- "https://raw.githubusercontent.com/epiforecasts/covid19-uk-hospitalisation-data/main/data/trust-ltla-mapping/trust_utla_mapping_public.csv"
+  
+  if(RCurl::url.exists(mapping_url)){
+    
+    trust_utla_map <- readr::read_csv(file = "https://raw.githubusercontent.com/epiforecasts/covid19-uk-hospitalisation-data/main/data/trust-ltla-mapping/trust_utla_mapping_public.csv")
+    
+  } else {
+    
+    trust_utla_map <- readRDS(file = here::here("data", "trust-ltla-mapping", "trust_utla_mapping_public.rds"))
+    
+  }
   
   ## Download Trust-level admissions data
   raw_adm_trust <- download_trust_data(release_date = release_date)
