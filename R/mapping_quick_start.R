@@ -1,5 +1,5 @@
 
-# Load LTLA-Trust mapping -------------------------------------------------
+# Load UTLA-Trust mapping -------------------------------------------------
 
 get_mapping <- function(){
   
@@ -11,7 +11,7 @@ get_mapping <- function(){
 
 
 
-# Get Trust and LTLA names ------------------------------------------------
+# Get Trust and UTLA names ------------------------------------------------
 
 get_names <- function(raw_map){
   
@@ -96,12 +96,6 @@ summarise_mapping <- function(with_map, with_shp = get_england_shp(), for_trust 
   } else if (!is.null(for_utla)){
     
     for_utla <- toupper(for_utla)
-    
-    ## Pull LTLA name
-    get_names(raw_map = get_mapping()) %>%
-      dplyr::filter(utla_code == for_utla) %>%
-      pull(utla_name) %>%
-      unique() -> plot_title
     
     ## Table summary of mapping
     tb <- get_names(raw_map = with_map %>%

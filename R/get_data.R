@@ -4,7 +4,7 @@
 ## Download and save daily Trust- and hospital-level admissions and occupancy data from:
 ## https://www.england.nhs.uk/statistics/statistical-work-areas/covid-19-hospital-activity/
 
-download_trust_data <- function(release_date  = NULL){
+download_trust_data <- function(release_date = NULL){
   
   nhs_url <- paste0("https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/",
                     lubridate::year(release_date), "/",
@@ -52,4 +52,39 @@ download_trust_data <- function(release_date  = NULL){
   return(out)
   
 }
+
+
+
+
+
+
+# Get UTLA-level admissions -----------------------------------------------
+
+## Wrapper around downloading and reshaping Trust-level admissions data
+
+get_admissions_utla <- function(release_date = NULL){
+  
+  ## Load Trust-UTLA mapping
+  trust_utla_map <- get_mapping()
+  
+  ## Download Trust-level admissions data
+  raw_adm_trust <- download_trust_data(release_date = release_date)
+  
+  adm_trust <- raw_adm_trust %>%
+    dplyr::filter(type1_acute,
+                  data == "New hosp cases") %>%
+    dplyr::select(trust_code = org_code, date, adm_trust = value)
+  
+  ## Map to UTLA-level admissions
+  adm_utla <- adm_trust %>%
+    dplyr::left_join(trust_utla_map, by = "trust_code") %>%
+    dplyr::mutate(adm_utla = adm_trust*p_trust) %>%
+    dplyr::group_by(utla_code, date) %>%
+    dplyr::summarise(adm = round(sum(adm_utla, na.rm = TRUE)))
+  
+  return(adm_utla)
+  
+}
+
+
 
