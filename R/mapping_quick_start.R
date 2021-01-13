@@ -1,18 +1,9 @@
 
 # Load LTLA-Trust mapping -------------------------------------------------
 
-get_mapping <- function(simplify = FALSE, p_min = 0.01){
+get_mapping <- function(){
   
-  out <- readRDS(file = here::here("data", "trust-ltla-mapping", "trust_ltla_mapping_public.rds"))
-  
-  if(simplify){
-    
-    out <- out %>%
-      dplyr::filter(p > p_min) %>%
-      dplyr::group_by(trust_code, ltla_code) %>%
-      dplyr::summarise()
-    
-  }
+  out <- readRDS(file = here::here("data", "trust-ltla-mapping", "trust_utla_mapping_public.rds"))
   
   return(out)
   
@@ -31,14 +22,15 @@ get_names <- function(raw_map){
     dplyr::mutate(trust_name = stringr::str_replace(stringr::str_to_title(trust_name), "Nhs", "NHS"))
   
   ## File from https://geoportal.statistics.gov.uk/datasets/3e4f4af826d343349c13fb7f0aa2a307_0
-  ltla_names <- readr::read_csv(file = here::here("data", "raw", "england_ltla", "ltla_utla_list.csv"),
+  utla_names <- readr::read_csv(file = here::here("data", "raw", "england_ltla", "ltla_utla_list.csv"),
                                 col_names = TRUE) %>%
-    dplyr::select(ltla_code = LTLA19CD, ltla_name = LTLA19NM)
+    dplyr::select(utla_code = UTLA19CD, utla_name = UTLA19NM) %>%
+    unique()
   
   out <- raw_map %>%
     dplyr::left_join(trust_names, by = "trust_code") %>%
-    dplyr::left_join(ltla_names, by = "ltla_code") %>%
-    dplyr::select(trust_code, trust_name, ltla_code, ltla_name, p_trust, p_ltla)
+    dplyr::left_join(utla_names, by = "utla_code") %>%
+    dplyr::select(trust_code, trust_name, utla_code, utla_name, p_trust, p_utla)
   
   return(out)
   
@@ -50,12 +42,12 @@ get_names <- function(raw_map){
 
 get_england_shp <- function(){
   
-  out <- sf::read_sf(here::here("data", "raw", "uk_ltla_shp", "ltla_uk.shp")) %>%
+  out <- sf::read_sf(here::here("data", "raw", "uk_utla_shp", "utla_uk.shp")) %>%
     sf::st_transform(27700) %>%
     sf::st_simplify(dTolerance = 100) %>%
-    dplyr::filter(str_starts(lad19cd, "E")) %>%
-    dplyr::rename(ltla_code = lad19cd,
-                  ltla_name = lad19nm)
+    dplyr::filter(str_starts(ctyua19cd, "E")) %>%
+    dplyr::rename(utla_code = ctyua19cd,
+                  utla_name = ctyua19nm)
   
 }
 
@@ -64,7 +56,7 @@ get_england_shp <- function(){
 
 # Visualise mapping -------------------------------------------------------
 
-summarise_mapping <- function(with_map, with_shp = get_england_shp(), for_trust = NULL, for_ltla = NULL){
+summarise_mapping <- function(with_map, with_shp = get_england_shp(), for_trust = NULL, for_utla = NULL){
   
   if(!is.null(for_trust)){
     
@@ -79,18 +71,18 @@ summarise_mapping <- function(with_map, with_shp = get_england_shp(), for_trust 
     ## Table summary of mapping
     tb <- get_names(raw_map = with_map %>%
                       dplyr::filter(trust_code == for_trust)) %>%
-      dplyr::select(trust_code, trust_name, ltla_code, ltla_name, p_trust) %>%
+      dplyr::select(trust_code, trust_name, utla_code, utla_name, p_trust) %>%
       dplyr::arrange(-p_trust)
     
     with_map <- with_map %>%
       dplyr::filter(trust_code == for_trust) %>%
-      dplyr::group_by(ltla_code, p_trust) %>%
+      dplyr::group_by(utla_code, p_trust) %>%
       dplyr::summarise(.groups = "drop") %>%
       dplyr::mutate(p = 100*p_trust)
     
     ## Visual summary of mapping
     g <- with_shp %>%
-      dplyr::left_join(with_map, by = "ltla_code") %>%
+      dplyr::left_join(with_map, by = "utla_code") %>%
       ggplot() +
       geom_sf(aes(fill = p), lwd = 0.3, col = "grey20") +
       scale_fill_distiller(palette = "OrRd", direction = 1, na.value = "grey85", limits = c(0, NA)) +
@@ -101,21 +93,21 @@ summarise_mapping <- function(with_map, with_shp = get_england_shp(), for_trust 
     
     return(list(summary_table = tb, summary_plot = g))
     
-  } else if (!is.null(for_ltla)){
+  } else if (!is.null(for_utla)){
     
-    for_ltla <- toupper(for_ltla)
+    for_utla <- toupper(for_utla)
     
     ## Pull LTLA name
     get_names(raw_map = get_mapping()) %>%
-      dplyr::filter(ltla_code == for_ltla) %>%
-      pull(ltla_name) %>%
+      dplyr::filter(utla_code == for_utla) %>%
+      pull(utla_name) %>%
       unique() -> plot_title
     
     ## Table summary of mapping
     tb <- get_names(raw_map = with_map %>%
-                      dplyr::filter(ltla_code == for_ltla)) %>%
-      dplyr::select(ltla_code, ltla_name, trust_code, trust_name, p_ltla) %>%
-      dplyr::arrange(-p_ltla)
+                      dplyr::filter(utla_code == for_utla)) %>%
+      dplyr::select(utla_code, utla_name, trust_code, trust_name, p_utla) %>%
+      dplyr::arrange(-p_utla)
     
     return(list(summary_table = tb))
     
