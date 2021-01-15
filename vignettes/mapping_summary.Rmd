@@ -1,11 +1,11 @@
 ---
 title: "Mapping local authorities to NHS Acute Trusts in England"
 author: "Sophie Meakin"
-output:
-  html_document:
-    theme: sandstone
-    toc: true
-    toc_float: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Mapping local authorities to NHS Acute Trusts in England}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
@@ -13,7 +13,6 @@ output:
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
 library(tidyverse); library(sf)
-
 ```
 
 # Summary
@@ -34,14 +33,6 @@ The mapping is provided as a `.csv` and `.rds` file. This can be loaded directly
 
 
 ## Quick start
-
-Load the quick-start functions with `source("R/quick_start.R")`:
-
-```{r load_functions, eval = TRUE}
-
-source(here::here("R/mapping_quick_start.R"))
-
-```
 
 Load the raw mapping with `get_mapping()`:
 
