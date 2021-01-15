@@ -8,10 +8,10 @@
 #' or "ltla" for LTLA level admissions.
 #' @inheritParams download_trust_data 
 #' @inheritParams get_names
-#' @importFrom dplyr filter select left_join group_by mutate summarise
+#' @importFrom dplyr filter select left_join group_by mutate summarise ungroup
 #' @return A data.frame of admissions by day either at trust, LTLA or UTLA levels.
 #' @export
-get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping) {
+get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping, geo_names) {
   
   level <- match.arg(level, choices = c("utla", "ltla", "trust"))
 
@@ -28,14 +28,32 @@ get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping) 
 
   adm <- raw_adm_trust %>%
     filter(type1_acute, data == "New hosp cases") %>%
-    select(trust_code = org_code, date, admissions = value)
+    select(trust_code = org_code, date, admissions = value) %>% 
+    left_join(trust_names, by = "trust_code") %>% 
+    select(trust_code, trust_name, date, admissions)
 
   if (level %in% c("utla", "ltla")) {
+    if (missing(geo_names)) {
+      if (level %in% c("utla")) {
+        geo_names <- utla_names
+      }else {
+        geo_names <- NULL
+      }
+    }
+    if (!is.null(geo_names)) {
+      mapping <- mapping %>% 
+        left_join(geo_names, by = "geo_code")
+    }else{
+      mapping <- mapping %>% 
+        mutate(geo_name = NA)
+    }
+
     adm <- adm %>%
       left_join(mapping, by = "trust_code") %>%
       mutate(admissions = admissions * p_trust) %>%
-      group_by(geo_code, date) %>%
-      summarise(admissions = round(sum(admissions, na.rm = TRUE)))
+      group_by(geo_code, geo_name, date) %>%
+      summarise(admissions = round(sum(admissions, na.rm = TRUE))) %>% 
+      ungroup()
   }
   return(adm)
 }

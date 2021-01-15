@@ -4,7 +4,7 @@
 \alias{get_admissions}
 \title{Get Hospital Admissions}
 \usage{
-get_admissions(level = "trust", release_date = Sys.Date(), mapping)
+get_admissions(level = "trust", release_date = Sys.Date(), mapping, geo_names)
 }
 \arguments{
 \item{level}{Character string, defaulting to "trust". Defines the level of aggregation
@@ -16,6 +16,9 @@ the Thursday prior to the date specified.}
 
 \item{mapping}{data.frame containing trust_code, p_trust, geo_code and p_geo.
 Defaults to \code{trust_utla_mapping} if not supplied.}
+
+\item{geo_names}{A dataframe containing \code{geo_code} and \code{geo_name}. Used to
+assign meaningful to geographies.}
 }
 \value{
 A data.frame of admissions by day either at trust, LTLA or UTLA levels.
