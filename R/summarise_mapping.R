@@ -1,44 +1,52 @@
 #' Summarise Trust Mapping
 #'
-#' @param with_map 
-#' @param shapefile 
-#' @param for_trust 
-#' @param for_utla 
-#'
+#' @description Summarise the Trust mapping (currently only supports the UTLA mapping) both
+#' graphically and in a table.
+#' @param shapefile A shapefile defaults to `utla_uk_shape` if not suppplied.
+#' @param trust A character string indicating a trust of interest. 
+#' @param utla  A character string indicating the UTLA of interest. Only used if 
+#' `trust` is not specified. 
+#' @inheritParams get_names
+#' @importFrom dplyr filter select arrange group_by summarise mutate left_join summarise pull
+#' @importFrom ggplot2 ggplot geom_sf aes scale_fill_distiller labs theme_void theme
 #' @return
 #' @export
-#'
-#' @examples
-summarise_mapping <- function(with_map, shapefile = utla_shape, for_trust = NULL, for_utla = NULL){
+summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
   
-  if (missing(shapefile) {
+  if (missing(shapefile)){
     shapefile <- utla_uk_shape
   }
-  if(!is.null(for_trust)){
+  if (missing(mapping)) {
+    mapping <- trust_utla_mapping
+  }
+  
+  if(!is.null(trust)){
     
-    for_trust <- toupper(for_trust)
+    trust <- toupper(trust)
     
     ## Pull Trust name
-    get_names(raw_map = get_mapping()) %>%
-      dplyr::filter(trust_code == for_trust) %>%
+    plot_title <- mapping %>% 
+      get_names() %>%
+      filter(trust_code == trust) %>%
       pull(trust_name) %>%
-      unique() -> plot_title
+      unique()
     
     ## Table summary of mapping
-    tb <- get_names(raw_map = with_map %>%
-                      dplyr::filter(trust_code == for_trust)) %>%
-      dplyr::select(trust_code, trust_name, utla_code, utla_name, p_trust) %>%
-      dplyr::arrange(-p_trust)
+    tb <- mapping %>% 
+      filter(trust_code == trust)
+      get_names() %>%
+      select(trust_code, trust_name, utla_code, utla_name, p_trust) %>%
+      arrange(-p_trust)
     
-    with_map <- with_map %>%
-      dplyr::filter(trust_code == for_trust) %>%
-      dplyr::group_by(utla_code, p_trust) %>%
-      dplyr::summarise(.groups = "drop") %>%
-      dplyr::mutate(p = 100*p_trust)
+    mapping <- mapping %>%
+      filter(trust_code == trust) %>%
+      group_by(utla_code, p_trust) %>%
+      summarise(.groups = "drop") %>%
+      mutate(p = 100 * p_trust)
     
     ## Visual summary of mapping
-    g <- with_shp %>%
-      dplyr::left_join(with_map, by = "utla_code") %>%
+    g <- shapefile %>%
+      left_join(mapping, by = "utla_code") %>%
       ggplot() +
       geom_sf(aes(fill = p), lwd = 0.3, col = "grey20") +
       scale_fill_distiller(palette = "OrRd", direction = 1, na.value = "grey85", limits = c(0, NA)) +
@@ -48,16 +56,16 @@ summarise_mapping <- function(with_map, shapefile = utla_shape, for_trust = NULL
       theme(legend.position = "bottom", legend.justification = "left")
     
     return(list(summary_table = tb, summary_plot = g))
+  } else if (!is.null(utla)){
     
-  } else if (!is.null(for_utla)){
-    
-    for_utla <- toupper(for_utla)
-    
+    utla <- toupper(utla)
+  
     ## Table summary of mapping
-    tb <- get_names(raw_map = with_map %>%
-                      dplyr::filter(utla_code == for_utla)) %>%
-      dplyr::select(utla_code, utla_name, trust_code, trust_name, p_utla) %>%
-      dplyr::arrange(-p_utla)
+    tb <- mapping %>% 
+      filter(utla_code == utla) %>% 
+      get_names() %>%
+      select(utla_code, utla_name, trust_code, trust_name, p_utla) %>%
+      arrange(-p_utla)
     
     return(list(summary_table = tb))
   }

@@ -6,7 +6,7 @@ Authors@R: c(person("Sophie", "Meakin",
                     role = c("aut", "cre")))
 Description: Facilitates access to data on UK Covid-19 hospital admissions 
     aggregated to a range of spatial scales. 
-Language: en-gb
+Language: en-GB
 License: MIT + file LICENSE
 URL: https://epiforecasts.io/covid19.uk.hospitalisations,
     https://github.com/epiforecasts/covid19.uk.hospitalisations
@@ -25,4 +25,11 @@ Imports:
     readxl,
     purrr,
     tibble,
-    tidyr
+    tidyr,
+    ggplot2
+Suggests: 
+    janitor,
+    here,
+    knitr,
+    spelling,
+    usethis
