@@ -42,5 +42,6 @@ Suggests:
     knitr,
     spelling,
     usethis,
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr
