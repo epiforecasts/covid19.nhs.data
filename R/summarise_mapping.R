@@ -2,9 +2,9 @@
 #'
 #' @description Summarise the Trust mapping (currently only supports the UTLA mapping) both
 #' graphically and in a table.
-#' @param shapefile A shapefile defaults to `uk_utla_shape` if not supplied.
+#' @param shapefile A shapefile defaults to `england_utla_shape` if not supplied.
 #' @param trust A character string indicating a trust of interest. 
-#' @param geo  A character string indicating the geography of interest. Only used if 
+#' @param geography  A character string indicating the geography of interest. Only used if 
 #' `trust` is not specified. Related to the mapping used so for `trust_utla_mapping`
 #' refers to a UTLA. 
 #' @inheritParams get_names
@@ -15,20 +15,23 @@
 #' @export
 summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile, geo_names) {
   
-  if (is.null(trust) & is.null(geo)) { 
+  if (is.null(trust) & is.null(geography)) { 
     stop("Either a trust or a geography must be specified")
   }
   
   if (missing(shapefile)){
-    shapefile <- uk_utla_shape
+    shapefile <- england_utla_shape
   }
   if (missing(mapping)) {
     mapping <- trust_utla_mapping
   }
+  if (missing(geo_names)) {
+    geo_names <- utla_names
+  }
   
   if(!is.null(trust)){
     
-    trist <- toupper(trust)
+    trust <- toupper(trust)
     
     ## Pull trust name
     plot_title <- mapping %>% 
@@ -40,7 +43,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(trust_code == trust) %>% 
-      get_names(geo_names, geo_names) %>%
+      get_names(geo_names = geo_names) %>%
       select(trust_code, trust_name, geo_code, geo_name, p_trust) %>%
       arrange(-p_trust)
     
@@ -52,7 +55,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     
     ## Visual summary of mapping
     g <- shapefile %>%
-      left_join(mapping, by = "utla_code") %>% 
+      left_join(mapping, by = "geo_code") %>% 
       ggplot() +
       geom_sf(aes(fill = p), lwd = 0.3, col = "grey20") +
       scale_fill_distiller(palette = "OrRd", direction = 1, na.value = "grey85", limits = c(0, NA)) +
@@ -62,9 +65,9 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
       theme(legend.position = "bottom", legend.justification = "left")
     
     return(list(summary_table = tb, summary_plot = g))
-  } else if (!is.null(utla)){
+  } else if (!is.null(geography)){
     
-    utla <- toupper(utla)
+    geography <- toupper(geography)
   
     ## Table summary of mapping
     tb <- mapping %>% 

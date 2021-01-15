@@ -29,6 +29,6 @@ NULL
 ##' Linking File Between UTLA Codes and Names
 ##'
 ##'
-##' @name uk_utla_shape
+##' @name england_utla_shape
 ##' @docType data
 NULL

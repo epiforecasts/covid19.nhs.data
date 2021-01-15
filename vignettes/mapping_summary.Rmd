@@ -22,9 +22,9 @@ This package contains a many-to-many mapping between upper-tier local authority 
 The mapping contains the following variables:
 
 * `trust_code`: the three-digit organisation code for NHS Trusts.
-* `utla_code`: the nine-digit identifier for upper-tier local authorities in England.
+* `geo_code`: the nine-digit identifier for upper-tier local authorities in England.
 * `p_trust`: the proportion of admissions to a given Trust were admitted from a given UTLA
-* `p_utla`: the proportion of admissions from a given UTLA that were admitted to a given Trust.
+* `p_geo`: the proportion of admissions from a given UTLA that were admitted to a given Trust.
 
 # Usage
 
@@ -77,7 +77,7 @@ Summarise the mapping for a given UTLA (as defined by the UTLA organisation code
 
 ```{r summarise for ltla, echo = TRUE, eval = TRUE}
 
-summary <- summarise_mapping(mapping = trust_utla_mapping, utla = "E09000012")
+summary <- summarise_mapping(mapping = trust_utla_mapping, geography = "E09000012")
 
 summary$summary_table %>%
   knitr::kable()
