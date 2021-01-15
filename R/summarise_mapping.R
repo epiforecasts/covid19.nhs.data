@@ -20,13 +20,13 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
   }
   
   if (missing(shapefile)){
-    shapefile <- england_utla_shape
+    shapefile <- covid19.england.hospitalisations::england_utla_shape
   }
   if (missing(mapping)) {
-    mapping <- trust_utla_mapping
+    mapping <- covid19.england.hospitalisations::trust_utla_mapping
   }
   if (missing(geo_names)) {
-    geo_names <- utla_names
+    geo_names <- covid19.england.hospitalisations::utla_names
   }
   
   if(!is.null(trust)){
@@ -35,7 +35,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     
     ## Pull trust name
     plot_title <- mapping %>% 
-      get_names(geo_names = geo_names) %>%
+      covid19.england.hospitalisations::get_names(geo_names = geo_names) %>%
       filter(trust_code == trust) %>%
       pull(trust_name) %>%
       unique()
@@ -43,7 +43,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(trust_code == trust) %>% 
-      get_names(geo_names = geo_names) %>%
+      covid19.england.hospitalisations::get_names(geo_names = geo_names) %>%
       select(trust_code, trust_name, geo_code, geo_name, p_trust) %>%
       arrange(-p_trust)
     
@@ -54,16 +54,19 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
       mutate(p = 100 * p_trust)
     
     ## Visual summary of mapping
-    g <- shapefile %>%
-      left_join(mapping, by = "geo_code") %>% 
-      ggplot() +
-      geom_sf(aes(fill = p), lwd = 0.3, col = "grey20") +
-      scale_fill_distiller(palette = "OrRd", direction = 1, na.value = "grey85", limits = c(0, NA)) +
-      labs(title = plot_title,
-           fill = "% of Trust\nhospitalisations") +
-      theme_void() +
-      theme(legend.position = "bottom", legend.justification = "left")
-    
+    if (is.null(shapefile)) {
+      g <- shapefile %>%
+        left_join(mapping, by = "geo_code") %>% 
+        ggplot() +
+        geom_sf(aes(fill = p), lwd = 0.3, col = "grey20") +
+        scale_fill_distiller(palette = "OrRd", direction = 1, na.value = "grey85", limits = c(0, NA)) +
+        labs(title = plot_title,
+             fill = "% of Trust\nhospitalisations") +
+        theme_void() +
+        theme(legend.position = "bottom", legend.justification = "left")
+    }else{
+      g <- NULL
+    }
     return(list(summary_table = tb, summary_plot = g))
   } else if (!is.null(geography)){
     
@@ -72,7 +75,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(geo_code == geography) %>% 
-      get_names(geo_names = geo_names) %>%
+      covid19.england.hospitalisations::get_names(geo_names = geo_names) %>%
       select(geo_code, geo_name, trust_code, trust_name, p_geo) %>%
       arrange(-p_geo)
     

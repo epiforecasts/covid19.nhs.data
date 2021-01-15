@@ -4,6 +4,13 @@
 \name{trust_ltla_mapping}
 \alias{trust_ltla_mapping}
 \title{Mapping Between NHS Trust and LTLA}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 590 rows and 4 columns.
+}
+\usage{
+trust_ltla_mapping
+}
 \description{
 Mapping Between NHS Trust and LTLA
 }
+\keyword{datasets}

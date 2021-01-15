@@ -4,6 +4,13 @@
 \name{utla_names}
 \alias{utla_names}
 \title{Linking File Between UTLA Codes and Names}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 174 rows and 2 columns.
+}
+\usage{
+utla_names
+}
 \description{
 Linking File Between UTLA Codes and Names
 }
+\keyword{datasets}

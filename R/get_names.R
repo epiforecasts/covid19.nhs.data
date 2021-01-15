@@ -10,10 +10,10 @@
 #' @importFrom dplyr left_join select
 get_names <- function(mapping, geo_names) {
   if (missing(geo_names)) {
-    geo_names <- utla_names
+    geo_names <- covid19.england.hospitalisations::utla_names
   }
   out <- mapping %>%
-    left_join(trust_names, by = "trust_code") %>%
+    left_join(covid19.england.hospitalisations::trust_names, by = "trust_code") %>%
     left_join(geo_names, by = "geo_code") %>%
     select(trust_code, trust_name, geo_code, geo_name, p_trust, p_geo)
   return(out)
