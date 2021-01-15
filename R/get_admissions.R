@@ -6,7 +6,7 @@
 #' @param level Character string, defaulting to "trust". Defines the level of aggregation
 #' at which to return the data. Other supported options are "utla" for UTLA level admissions
 #' or "ltla" for LTLA level admissions.
-#' @inheritParams download_trust_date 
+#' @inheritParams download_trust_data 
 #' @inheritParams get_names
 #' @importFrom dplyr filter select left_join group_by mutate summarise
 #' @return A data.frame of admissions by day either at trust, LTLA or UTLA levels.
