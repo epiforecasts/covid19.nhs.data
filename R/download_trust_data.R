@@ -1,6 +1,6 @@
-#' Download UK Hospital Trust Admissions Data
+#' Download English Hospital Trust Admissions Data
 #'
-#' @description Downloads UK hospital admissions data by Trust. Data is released
+#' @description Downloads English hospital admissions data by Trust. Data is released
 #' each Thursday. See here for details:
 #' https://www.england.nhs.uk/statistics/statistical-work-areas/covid-19-hospital-activity/
 #' @param release_date Date, release date of data to download. Will automatically find
@@ -10,7 +10,7 @@
 #' @export
 #' @importFrom lubridate floor_date year month
 #' @importFrom RCurl url.exists
-#' @importFrom readxl excel_sheets cell_limits
+#' @importFrom readxl excel_sheets cell_limits read_excel
 #' @importFrom purrr map_df
 #' @importFrom tibble tibble
 #' @importFrom tidyr pivot_longer
@@ -33,7 +33,7 @@ download_trust_data <- function(release_date = Sys.Date()) {
     ".xlsx"
   )
 
-  if (!RCurl::url.exists(nhs_url)) {
+  if (!url.exists(nhs_url)) {
 
     ## Try last week data
     release_date <- release_date - 7

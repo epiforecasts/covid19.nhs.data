@@ -12,12 +12,12 @@ vignette: >
 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
-library(knitr); library(sf)
+library(knitr)
 ```
 
 # Summary
 
-This repo contains a many-to-many mapping between upper-tier local authority districts to NHS Acute Trusts in England, COVID-19 hospital admissions. This mapping can be used to match UTLA-level data, such as testing data, to hospital admissions and other related data that is typically provided at the Trust level.
+This package contains a many-to-many mapping between upper-tier local authority districts to NHS Acute Trusts in England, COVID-19 hospital admissions. This mapping can be used to match UTLA-level data, such as testing data, to hospital admissions and other related data that is typically provided at the Trust level.
 
 The mapping contains the following variables:
 
@@ -29,10 +29,16 @@ The mapping contains the following variables:
 
 # Usage
 
-The mapping is provided as a `.csv` and `.rds` file. This can be loaded directly with `readRDS()` or `readr::read_csv()`, or using the quick-start functions, outlined below.
+The mapping is provided as a built in package dataset and can be loaded directly using `covid19.england.hospitalisations::trust_utla_mapping` or as shown below. 
 
 
 ## Quick start
+
+Load the library with: 
+
+```{r package, echo = TRUE, eval = TRUE}
+library(covid19.england.hospitalisations)
+```
 
 Load the raw mapping with `trust_utla_mapping`:
 

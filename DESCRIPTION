@@ -1,16 +1,23 @@
-Package: covid19.uk.hospitalisations
-Title: Covid 19 UK Hospital Admissions
+Package: covid19.england.hospitalisations
+Title: Covid 19 England Hospital Admissions
 Version: 0.1.0
 Authors@R: c(person("Sophie", "Meakin",
                     email = "sophie.meaking@lshtm.ac.uk",
-                    role = c("aut", "cre")))
-Description: Facilitates access to data on UK Covid-19 hospital admissions 
+                    role = c("aut", "cre")),
+    person(given = "Sam", "Abbott",
+           role = c("aut"),
+           email = "sam.abbott@lshtm.ac.uk",
+           comment = c(ORCID = "0000-0001-8057-8037")),
+    person("Sebastian", "Funk",
+            email = "sebastian.funk@lshtm.ac.uk",
+            role = c("aut")))
+Description: Facilitates access to data on English Covid-19 hospital admissions 
     aggregated to a range of spatial scales. 
 Language: en-GB
 License: MIT + file LICENSE
-URL: https://epiforecasts.io/covid19.uk.hospitalisations,
-    https://github.com/epiforecasts/covid19.uk.hospitalisations
-BugReports: https://github.com/epiforecasts/covid19.uk.hospitalisations/issues
+URL: https://epiforecasts.io/covid19.england.hospitalisations,
+    https://github.com/epiforecasts/covid19.england.hospitalisations
+BugReports: https://github.com/epiforecasts/covid19.england.hospitalisations/issues
 Depends:
     R (>= 2.10)
 Encoding: UTF-8
@@ -33,4 +40,7 @@ Suggests:
     here,
     knitr,
     spelling,
-    usethis
+    usethis,
+    sf,
+    rmarkdown
+VignetteBuilder: knitr

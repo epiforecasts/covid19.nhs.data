@@ -15,10 +15,10 @@ summarise_mapping(trust = NULL, utla = NULL, mapping, shapefile)
 \item{mapping}{data.frame containing trust_code, p_trust, utla_code and p_utla.
 Defaults to \code{trust_utla_mapping} if not supplied.}
 
-\item{shapefile}{A shapefile defaults to \code{utla_uk_shape} if not suppplied.}
+\item{shapefile}{A shapefile defaults to \code{uk_utla_shape} if not supplied.}
 }
 \value{
-
+A table and optional map summarising the admissions mapping.
 }
 \description{
 Summarise the Trust mapping (currently only supports the UTLA mapping) both

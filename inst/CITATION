@@ -1,0 +1,16 @@
+citHeader("To cite covid19.england.hospitalisations in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Trust-level COVID-19 hospitalisations in the United Kingdom",
+  author   = ,
+  journal  = ,
+  year     = ,
+  volume   = ,
+  number   = ,
+  pages    = ,
+  url      = ,
+  textVersion = paste(
+
+  )
+)

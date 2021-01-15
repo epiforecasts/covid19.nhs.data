@@ -2,19 +2,19 @@
 #'
 #' @description Summarise the Trust mapping (currently only supports the UTLA mapping) both
 #' graphically and in a table.
-#' @param shapefile A shapefile defaults to `utla_uk_shape` if not suppplied.
+#' @param shapefile A shapefile defaults to `uk_utla_shape` if not supplied.
 #' @param trust A character string indicating a trust of interest. 
 #' @param utla  A character string indicating the UTLA of interest. Only used if 
 #' `trust` is not specified. 
 #' @inheritParams get_names
 #' @importFrom dplyr filter select arrange group_by summarise mutate left_join summarise pull
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_distiller labs theme_void theme
-#' @return
+#' @return A table and optional map summarising the admissions mapping. 
 #' @export
 summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
   
   if (missing(shapefile)){
-    shapefile <- utla_uk_shape
+    shapefile <- uk_utla_shape
   }
   if (missing(mapping)) {
     mapping <- trust_utla_mapping
@@ -33,7 +33,7 @@ summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
     
     ## Table summary of mapping
     tb <- mapping %>% 
-      filter(trust_code == trust)
+      filter(trust_code == trust) %>% 
       get_names() %>%
       select(trust_code, trust_name, utla_code, utla_name, p_trust) %>%
       arrange(-p_trust)
