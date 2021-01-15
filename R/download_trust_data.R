@@ -15,6 +15,7 @@
 #' @importFrom tibble tibble
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr mutate rename filter select bind_rows
+#' @importFrom utils download.file
 download_trust_data <- function(release_date = Sys.Date()) {
 
   ## Revert to the last Thursday

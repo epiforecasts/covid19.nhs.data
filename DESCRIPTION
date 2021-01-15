@@ -26,7 +26,8 @@ Imports:
     purrr,
     tibble,
     tidyr,
-    ggplot2
+    ggplot2,
+    utils
 Suggests: 
     janitor,
     here,
