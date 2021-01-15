@@ -1,0 +1,22 @@
+Package: covid19.uk.hospitalisations
+Title: Covid 19 UK Hospital Admissions
+Version: 0.1.0
+Authors@R: c(person("Sophie", "Meakin",
+                    email = "sophie.meaking@lshtm.ac.uk",
+                    role = c("aut", "cre")))
+Description: Facilitates access to data on UK Covid-19 hospital admissions 
+    aggregated to a range of spatial scales. 
+Language: en-gb
+License: MIT + file LICENSE
+URL: https://epiforecasts.io/covid19.uk.hospitalisations,
+    https://github.com/epiforecasts/covid19.uk.hospitalisations
+BugReports: https://github.com/epiforecasts/covid19.uk.hospitalisations/issues
+Depends:
+    R (>= 2.10)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    magrittr
