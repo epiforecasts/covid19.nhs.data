@@ -2,18 +2,21 @@
 % Please edit documentation in R/get_names.R
 \name{get_names}
 \alias{get_names}
-\title{Link Mapping to Trust and UTLA Names}
+\title{Link Mapping to Trust and Geography Names}
 \usage{
-get_names(mapping)
+get_names(mapping, geo_names)
 }
 \arguments{
-\item{mapping}{data.frame containing trust_code, p_trust, utla_code and p_utla.
+\item{mapping}{data.frame containing trust_code, p_trust, geo_code and p_geo.
 Defaults to \code{trust_utla_mapping} if not supplied.}
+
+\item{geo_names}{A dataframe containing \code{geo_code} and \code{geo_name}. Used to
+assign meaningful to geographies.}
 }
 \value{
 A data.frame containing a UTLA to trust level admissions map combined
 meaningful names.
 }
 \description{
-Link Mapping to Trust and UTLA Names
+Link Mapping to Trust and Geography Names
 }

@@ -26,7 +26,6 @@ The mapping contains the following variables:
 * `p_trust`: the proportion of admissions to a given Trust were admitted from a given UTLA
 * `p_utla`: the proportion of admissions from a given UTLA that were admitted to a given Trust.
 
-
 # Usage
 
 The mapping is provided as a built in package dataset and can be loaded directly using `covid19.england.hospitalisations::trust_utla_mapping` or as shown below. 

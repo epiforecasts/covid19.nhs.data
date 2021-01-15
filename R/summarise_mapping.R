@@ -4,18 +4,19 @@
 #' graphically and in a table.
 #' @param shapefile A shapefile defaults to `uk_utla_shape` if not supplied.
 #' @param trust A character string indicating a trust of interest. 
-#' @param utla  A character string indicating the UTLA of interest. Only used if 
-#' `trust` is not specified. 
+#' @param geo  A character string indicating the geography of interest. Only used if 
+#' `trust` is not specified. Related to the mapping used so for `trust_utla_mapping`
+#' refers to a UTLA. 
 #' @inheritParams get_names
 #' @importFrom dplyr filter select arrange group_by summarise mutate left_join summarise pull
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_distiller labs theme_void theme
 #' @import sf 
 #' @return A table and optional map summarising the admissions mapping. 
 #' @export
-summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
+summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile, geo_names) {
   
-  if (is.null(trust) & is.null(utla)) { 
-    stop("Either a trust or a UTLA must be specified")
+  if (is.null(trust) & is.null(geo)) { 
+    stop("Either a trust or a geography must be specified")
   }
   
   if (missing(shapefile)){
@@ -27,11 +28,11 @@ summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
   
   if(!is.null(trust)){
     
-    trust <- toupper(trust)
+    trist <- toupper(trust)
     
-    ## Pull Trust name
+    ## Pull trust name
     plot_title <- mapping %>% 
-      get_names() %>%
+      get_names(geo_names = geo_names) %>%
       filter(trust_code == trust) %>%
       pull(trust_name) %>%
       unique()
@@ -39,13 +40,13 @@ summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(trust_code == trust) %>% 
-      get_names() %>%
-      select(trust_code, trust_name, utla_code, utla_name, p_trust) %>%
+      get_names(geo_names, geo_names) %>%
+      select(trust_code, trust_name, geo_code, geo_name, p_trust) %>%
       arrange(-p_trust)
     
     mapping <- mapping %>%
       filter(trust_code == trust) %>%
-      group_by(utla_code, p_trust) %>%
+      group_by(geo_code, p_trust) %>%
       summarise(.groups = "drop") %>%
       mutate(p = 100 * p_trust)
     
@@ -67,10 +68,10 @@ summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
   
     ## Table summary of mapping
     tb <- mapping %>% 
-      filter(utla_code == utla) %>% 
-      get_names() %>%
-      select(utla_code, utla_name, trust_code, trust_name, p_utla) %>%
-      arrange(-p_utla)
+      filter(geo_code == geography) %>% 
+      get_names(geo_names = geo_names) %>%
+      select(geo_code, geo_name, trust_code, trust_name, p_geo) %>%
+      arrange(-p_geo)
     
     return(list(summary_table = tb))
   }

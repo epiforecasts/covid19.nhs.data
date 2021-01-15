@@ -30,17 +30,11 @@ get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping) 
     filter(type1_acute, data == "New hosp cases") %>%
     select(trust_code = org_code, date, admissions = value)
 
-  if (level %in% "utla") {
+  if (level %in% c("utla", "ltla")) {
     adm <- adm %>%
       left_join(mapping, by = "trust_code") %>%
       mutate(admissions = admissions * p_trust) %>%
-      group_by(utla_code, date) %>%
-      summarise(admissions = round(sum(admissions, na.rm = TRUE)))
-  } else if (level %in% "ltla") {
-    adm <- adm %>%
-      left_join(mapping, by = "trust_code") %>%
-      mutate(admissions = admissions * p_trust) %>%
-      group_by(ltla_code, date) %>%
+      group_by(geo_code, date) %>%
       summarise(admissions = round(sum(admissions, na.rm = TRUE)))
   }
   return(adm)

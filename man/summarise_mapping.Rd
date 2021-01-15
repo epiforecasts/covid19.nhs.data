@@ -4,18 +4,28 @@
 \alias{summarise_mapping}
 \title{Summarise Trust Mapping}
 \usage{
-summarise_mapping(trust = NULL, utla = NULL, mapping, shapefile)
+summarise_mapping(
+  trust = NULL,
+  geography = NULL,
+  mapping,
+  shapefile,
+  geo_names
+)
 }
 \arguments{
 \item{trust}{A character string indicating a trust of interest.}
 
-\item{utla}{A character string indicating the UTLA of interest. Only used if
-\code{trust} is not specified.}
-
-\item{mapping}{data.frame containing trust_code, p_trust, utla_code and p_utla.
+\item{mapping}{data.frame containing trust_code, p_trust, geo_code and p_geo.
 Defaults to \code{trust_utla_mapping} if not supplied.}
 
 \item{shapefile}{A shapefile defaults to \code{uk_utla_shape} if not supplied.}
+
+\item{geo_names}{A dataframe containing \code{geo_code} and \code{geo_name}. Used to
+assign meaningful to geographies.}
+
+\item{geo}{A character string indicating the geography of interest. Only used if
+\code{trust} is not specified. Related to the mapping used so for \code{trust_utla_mapping}
+refers to a UTLA.}
 }
 \value{
 A table and optional map summarising the admissions mapping.
