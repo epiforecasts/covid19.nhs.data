@@ -9,6 +9,7 @@
 #' @inheritParams get_names
 #' @importFrom dplyr filter select arrange group_by summarise mutate left_join summarise pull
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_distiller labs theme_void theme
+#' @import sf 
 #' @return A table and optional map summarising the admissions mapping. 
 #' @export
 summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
@@ -50,7 +51,7 @@ summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
     
     ## Visual summary of mapping
     g <- shapefile %>%
-      left_join(mapping, by = "utla_code") %>%
+      left_join(mapping, by = "utla_code") %>% 
       ggplot() +
       geom_sf(aes(fill = p), lwd = 0.3, col = "grey20") +
       scale_fill_distiller(palette = "OrRd", direction = 1, na.value = "grey85", limits = c(0, NA)) +

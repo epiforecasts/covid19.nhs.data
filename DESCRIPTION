@@ -34,13 +34,13 @@ Imports:
     tibble,
     tidyr,
     ggplot2,
-    utils
+    utils,
+    sf
 Suggests: 
     janitor,
     here,
     knitr,
     spelling,
     usethis,
-    sf,
     rmarkdown
 VignetteBuilder: knitr
