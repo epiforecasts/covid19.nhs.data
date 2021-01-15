@@ -13,6 +13,10 @@
 #' @export
 summarise_mapping <- function(trust = NULL, utla = NULL, mapping, shapefile) {
   
+  if (is.null(trust) & is.null(utla)) { 
+    stop("Either a trust or a UTLA must be specified")
+  }
+  
   if (missing(shapefile)){
     shapefile <- uk_utla_shape
   }
