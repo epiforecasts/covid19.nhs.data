@@ -26,7 +26,7 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
     scale_fill <- scale_fill_viridis_c(option = "viridis", direction = -1)
   }
   
-  if (is.null(date)) {
+  if (!is.null(date)) {
     admissions <- admissions %>% 
       filter(date %in% max_date)
   }
