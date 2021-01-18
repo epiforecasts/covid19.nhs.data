@@ -8,7 +8,7 @@
 #'
 #' @return A data.frame of hospital admissions by trust.
 #' @export
-#' @importFrom lubridate floor_date year month
+#' @importFrom lubridate floor_date year month as_date
 #' @importFrom RCurl url.exists
 #' @importFrom readxl excel_sheets cell_limits read_excel
 #' @importFrom purrr map_df
@@ -19,6 +19,7 @@
 download_trust_data <- function(release_date = Sys.Date()) {
 
   ## Revert to the last Thursday
+  release_date <- as_date(release_date)
   release_date <- floor_date(release_date, unit = "week", week_start = 4)
 
   nhs_url <- paste0(
