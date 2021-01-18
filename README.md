@@ -1,6 +1,8 @@
 
 # Trust-level COVID-19 hospitalisations in England
 
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R build
 status](https://github.com/epiforecasts/covid19.england.hospitalisations/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/covid19.england.hospitalisations/actions)
 [![Codecov test
