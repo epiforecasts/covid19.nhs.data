@@ -20,13 +20,13 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
   }
   
   if (missing(shapefile)){
-    shapefile <- covid19.england.hospitalisations::england_utla_shape
+    shapefile <- covid19.nhs.data::england_utla_shape
   }
   if (missing(mapping)) {
-    mapping <- covid19.england.hospitalisations::trust_utla_mapping
+    mapping <- covid19.nhs.data::trust_utla_mapping
   }
   if (missing(geo_names)) {
-    geo_names <- covid19.england.hospitalisations::utla_names
+    geo_names <- covid19.nhs.data::utla_names
   }
   
   if(!is.null(trust)){
@@ -35,7 +35,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     
     ## Pull trust name
     plot_title <- mapping %>% 
-      covid19.england.hospitalisations::get_names(geo_names = geo_names) %>%
+      covid19.nhs.data::get_names(geo_names = geo_names) %>%
       filter(trust_code == trust) %>%
       pull(trust_name) %>%
       unique()
@@ -43,7 +43,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(trust_code == trust) %>% 
-      covid19.england.hospitalisations::get_names(geo_names = geo_names) %>%
+      covid19.nhs.data::get_names(geo_names = geo_names) %>%
       select(trust_code, trust_name, geo_code, geo_name, p_trust) %>%
       arrange(-p_trust)
     
@@ -75,7 +75,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(geo_code == geography) %>% 
-      covid19.england.hospitalisations::get_names(geo_names = geo_names) %>%
+      covid19.nhs.data::get_names(geo_names = geo_names) %>%
       select(geo_code, geo_name, trust_code, trust_name, p_geo) %>%
       arrange(-p_geo)
     

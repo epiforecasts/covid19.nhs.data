@@ -1,4 +1,4 @@
-Package: covid19.england.hospitalisations
+Package: covid19.nhs.data
 Title: Covid 19 England Hospital Admissions
 Version: 0.1.0
 Authors@R: c(person("Sophie", "Meakin",
@@ -15,9 +15,9 @@ Description: Facilitates access to data on English Covid-19 hospital admissions
     aggregated to a range of spatial scales. 
 Language: en-GB
 License: MIT + file LICENSE
-URL: https://epiforecasts.io/covid19.england.hospitalisations,
-    https://github.com/epiforecasts/covid19.england.hospitalisations
-BugReports: https://github.com/epiforecasts/covid19.england.hospitalisations/issues
+URL: https://epiforecasts.io/covid19.nhs.data,
+    https://github.com/epiforecasts/covid19.nhs.data
+BugReports: https://github.com/epiforecasts/covid19.nhs.data/issues
 Depends:
     R (>= 2.10)
 Encoding: UTF-8

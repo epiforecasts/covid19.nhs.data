@@ -19,8 +19,8 @@ library(knitr)
 
 This package contains many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England, based on COVID-19 hospital admissions:
 
-* Trust-UTLA mapping: `covid19.england.hospitalisations::trust_utla_mapping`
-* Trust-LTLA mapping: `covid19.england.hospitalisations::trust_ltla_mapping`
+* Trust-UTLA mapping: `covid19.nhs.data::trust_utla_mapping`
+* Trust-LTLA mapping: `covid19.nhs.data::trust_ltla_mapping`
 
 These mappings can be used to map data reported by local authority (e.g. testing) to NHS Trusts, or to map Trust-level data (e.g. admissions) to local authorities.
 
@@ -33,7 +33,7 @@ The mappings contain the following variables:
 
 # Usage
 
-The mapping is provided as a built in package dataset and can be loaded directly using `covid19.england.hospitalisations::trust_utla_mapping` and `covid19.england.hospitalisations::trust_ltla_mapping` or as shown below.
+The mapping is provided as a built in package dataset and can be loaded directly using `covid19.nhs.data::trust_utla_mapping` and `covid19.nhs.data::trust_ltla_mapping` or as shown below.
 
 
 ## Quick start
@@ -41,7 +41,7 @@ The mapping is provided as a built in package dataset and can be loaded directly
 Load the library with: 
 
 ```{r package, echo = TRUE, eval = TRUE}
-library(covid19.england.hospitalisations)
+library(covid19.nhs.data)
 ```
 
 Load the basic Trust-UTLA mapping with `trust_utla_mapping`:

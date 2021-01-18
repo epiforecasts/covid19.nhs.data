@@ -1,4 +1,4 @@
-url: epiforecasts.io/covid19.england.hospitalisations/
+url: epiforecasts.io/covid19.nhs.data/
 template:
   opengraph:
     image:

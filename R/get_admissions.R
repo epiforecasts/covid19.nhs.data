@@ -17,9 +17,9 @@ get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping, 
 
   if (missing(mapping)) {
     if (level %in% "utla") {
-      mapping <- covid19.england.hospitalisations::trust_utla_mapping
+      mapping <- covid19.nhs.data::trust_utla_mapping
     } else if (level %in% "ltla") {
-      mapping <- covid19.england.hospitalisations::trust_ltla_mapping
+      mapping <- covid19.nhs.data::trust_ltla_mapping
     }
   }
 
@@ -29,15 +29,15 @@ get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping, 
   adm <- raw_adm_trust %>%
     filter(type1_acute, data == "New hosp cases") %>%
     select(trust_code = org_code, date, admissions = value) %>% 
-    left_join(covid19.england.hospitalisations::trust_names, by = "trust_code") %>% 
+    left_join(covid19.nhs.data::trust_names, by = "trust_code") %>% 
     select(trust_code, trust_name, date, admissions)
 
   if (level %in% c("utla", "ltla")) {
     if (missing(geo_names)) {
       if (level %in% c("utla")) {
-        geo_names <- covid19.england.hospitalisations::utla_names
+        geo_names <- covid19.nhs.data::utla_names
       }else if (level %in% "ltla") {
-        geo_names <- covid19.england.hospitalisations::ltla_names
+        geo_names <- covid19.nhs.data::ltla_names
       }else{
         geo_names <- NULL
       }

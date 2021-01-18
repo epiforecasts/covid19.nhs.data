@@ -4,15 +4,15 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R build
-status](https://github.com/epiforecasts/covid19.england.hospitalisations/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/covid19.england.hospitalisations/actions)
+status](https://github.com/epiforecasts/covid19.nhs.data/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/covid19.nhs.data/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/epiforecasts/covid19.england.hospitalisation/branch/master/graph/badge.svg)](https://codecov.io/gh/epiforecasts/covid19.england.hospitalisation?branch=master)
+coverage](https://codecov.io/gh/epiforecasts/covid19.nhs.data/branch/master/graph/badge.svg)](https://codecov.io/gh/epiforecasts/covid19.nhs.data?branch=master)
 
 This package contains a many-to-many mapping between local authority
 districts and NHS Acute Trusts in England; details of this mapping
 (including a summary of the methods and a quick-start guide) can be
 found in
-[vignettes/mapping-summary](https://github.com/epiforecasts/covid19-uk-hospitalisation-data/tree/main/vignettes/mapping-summary).
+[vignettes/mapping-summary](https://github.com/epiforecasts/covid19.nhs.data/tree/main/vignettes/mapping-summary).
 
 This package also has functionality to download trust-level hospital
 admissions data, published weekly on the [NHS COVID-19 Hospital
@@ -31,13 +31,13 @@ Install the stable development version of the package using
 ``` r
 install.packages("drat")
 drat:::add("epiforecasts")
-install.packages("covid19.england.hospitalisations")
+install.packages("covid19.nhs.data")
 ```
 
 Install the unstable development version of the package with:
 
 ``` r
-remotes::install_github("epiforecasts/covid19.england.hospitalisations")
+remotes::install_github("epiforecasts/covid19.nhs.data")
 ```
 
 ## Quick start
@@ -45,7 +45,7 @@ remotes::install_github("epiforecasts/covid19.england.hospitalisations")
 Load the package.
 
 ``` r
-library(covid19.england.hospitalisations)
+library(covid19.nhs.data)
 ```
 
 Download the latest admissions mapped to lower-tier local authority
