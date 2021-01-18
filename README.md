@@ -7,6 +7,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://github.com/epiforecasts/covid19.nhs.data/workflows/R-CMD-check/badge.svg)](https://github.com/epiforecasts/covid19.nhs.data/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/epiforecasts/covid19.nhs.data/branch/master/graph/badge.svg)](https://codecov.io/gh/epiforecasts/covid19.nhs.data?branch=master)
+[![DOI](https://zenodo.org/badge/312314841.svg)](https://zenodo.org/badge/latestdoi/312314841)
 
 This package contains a many-to-many mapping between local authority
 districts and NHS Acute Trusts in England; details of this mapping
