@@ -52,13 +52,13 @@ adm <- get_admissions("ltla")
 
 Map the latest available estimates by LTLA using one of the built in package shapefiles. 
 
-```{r}
+```{r map}
 map_admissions(adm, england_ltla_shape)
 ```
 
 Plot the time series of estimated admissions in an example LTLA (here Derby). 
 
-```{r}
+```{r timeseries}
 library(ggplot2)
 library(dplyr)
 

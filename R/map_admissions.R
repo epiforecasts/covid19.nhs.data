@@ -4,7 +4,7 @@
 #' latest data provided.
 #' @param admissions A data.frame of admissions data as produced by `get_dadmissions`. 
 #' Must contain the following variables: `geo_code`, `date`, and `admissions`
-#' @param date A date variable indicating when to plot data for. 
+#' @param date A date variable (or vector) indicating when to plot data for. 
 #' @param scale_fill A `ggplot2` `scale_fill` used to define the fill colours 
 #' used in the map. The default is: `scale_fill_viridis_c(option = "cividis", direction = -1)`.
 #' @inheritParams summarise_mapping
@@ -26,7 +26,7 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
   }
   
   admissions <- admissions %>% 
-    filter(date == max_date)
+    filter(date %in% max_date)
   
   g <- shapefile %>%
     left_join(admissions, by = "geo_code") %>% 

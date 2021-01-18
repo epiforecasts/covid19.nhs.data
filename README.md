@@ -61,7 +61,7 @@ package shapefiles.
 map_admissions(adm, england_ltla_shape)
 ```
 
-![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/map-1.png)<!-- -->
 
 Plot the time series of estimated admissions in an example LTLA (here
 Derby).
@@ -88,4 +88,4 @@ adm %>%
        subtitle = "Estimated using a probalistic mapping from NHS Trusts to lower-tier local authority level")
 ```
 
-![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/timeseries-1.png)<!-- -->
