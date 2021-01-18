@@ -1,5 +1,5 @@
 
-# NHS trust level Covid-19 hospital data aggregated to a range of spatial scales
+# NHS trust level Covid-19 data aggregated to a range of spatial scales
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
