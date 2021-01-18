@@ -6,7 +6,7 @@
 #' Must contain the following variables: `geo_code`, `date`, and `admissions`
 #' @param date A date variable (or vector) indicating when to plot data for. 
 #' @param scale_fill A `ggplot2` `scale_fill` used to define the fill colours 
-#' used in the map. The default is: `scale_fill_viridis_c(option = "cividis", direction = -1)`.
+#' used in the map. The default is: `scale_fill_viridis_c(option = "viridis", direction = -1)`.
 #' @inheritParams summarise_mapping
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_viridis_c labs theme_void theme guides guide_colorbar
 #' @importFrom dplyr filter
