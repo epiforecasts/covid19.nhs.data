@@ -50,7 +50,7 @@ library(covid19.england.hospitalisations)
 
 Download the latest admissions mapped to lower-tier local authority
 (LTLA) using the default mapping. *Note: This data is updated weekly
-each Thursday and the mapping is a probablistic estimate.*
+each Thursday and the mapping is a probabilistic estimate.*
 
 ``` r
 adm <- get_admissions("ltla")
