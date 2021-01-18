@@ -71,5 +71,5 @@ adm %>%
   theme_minimal() +
   labs(x = "Date", y = "Daily Hospital Admissions",
        title = "Covid-19 Admissions in Derby", 
-       subtitle = "Estimated using a probalistic mapping from NHS Trusts to lower-tier local authority level")
+       subtitle = "Estimated using a probabilistic mapping from NHS Trusts to lower-tier local authority level")
 ```
