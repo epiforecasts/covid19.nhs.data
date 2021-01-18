@@ -26,9 +26,23 @@ NULL
 ##' @docType data
 "utla_names"
 
-#' Linking File Between UTLA Codes and Names
+##' Linking File Between LTLA Codes and Names
+##'
+##'
+##' @name ltla_names
+##' @docType data
+"ltla_names"
+
+#' UTLA Shapefile for England
 #'
 #'
 #' @name england_utla_shape
 #' @docType data
 "england_utla_shape"
+
+#' LTLA Shapefile for England
+#'
+#'
+#' @name england_ltla_shape
+#' @docType data
+"england_ltla_shape"
