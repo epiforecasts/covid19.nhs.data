@@ -4,7 +4,7 @@ pkgdown_sha: 84f234cf19153ce99bf1bcf875dc56248ddf0cbe
 articles:
   create_public_mapping: create_public_mapping.html
   mapping_summary: mapping_summary.html
-last_built: 2021-01-18T15:34Z
+last_built: 2021-01-18T15:35Z
 urls:
   reference: epiforecasts.io/covid19.nhs.data//reference
   article: epiforecasts.io/covid19.nhs.data//articles
