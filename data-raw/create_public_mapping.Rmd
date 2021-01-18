@@ -146,6 +146,6 @@ trust_utla_mapping <- trust_utla_public
 usethis::use_data(trust_utla_mapping,  overwrite = TRUE)
 
 trust_ltla_mapping <- trust_ltla_public
-usethis::use_data(trust_utla_mapping,  overwrite = TRUE)
+usethis::use_data(trust_ltla_mapping,  overwrite = TRUE)
 
 ```
