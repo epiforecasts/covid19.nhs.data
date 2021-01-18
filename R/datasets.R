@@ -17,7 +17,7 @@
 #'
 #' @name trust_names
 #' @docType data
-NULL
+"trust_names"
 
 ##' Linking File Between UTLA Codes and Names
 ##'
