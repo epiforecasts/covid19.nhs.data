@@ -1,0 +1,52 @@
+url: epiforecasts.io/covid19.nhs.data/
+template:
+  opengraph:
+    image:
+      src: man/figures/map-1.png
+      alt: "Map of estimated Covid-19 Hospital admissions by lower-tier local authority level."
+    twitter:
+      creator: "@SophieMeakin"
+      site: "@cmmid_lshtm"
+      card: summary_large_image
+  params:
+    bootswatch: lumen
+    
+development:
+  mode: auto
+
+authors:
+  Sophie Meakin:
+    href: "https://www.lshtm.ac.uk/aboutus/people/meakin.sophie"
+  Sam Abbott:
+    href: "https://www.samabbott.co.uk/"
+  Sebastian Funk: 
+    href: "https://www.lshtm.ac.uk/aboutus/people/funk.sebastian"
+    
+figures:
+  fig.width: 8
+  fig.height: 8
+  
+reference:
+  - title: Download Data
+    desc: Functions for downloading data
+    contents:
+      - download_trust_data
+      - get_admissions
+  - title: Summarise Data
+    desc: Functions for summarising downloaded datasets.
+    contents:
+      - map_admissions
+      - summarise_mapping
+  - title: Package Data
+    desc: Built in package datasets.
+    contents:
+      - contains("utla_mapping")
+      - contains("ltla_mapping")
+      - contains("_names")
+      - contains("_shape")
+  - title: Utilities
+    desc: Utility functions.
+    contents:
+      - get_names
+
+news:

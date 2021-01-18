@@ -1,0 +1,151 @@
+---
+title: "Creating the public Trust-LTLA and Trust-UTLA mappings"
+author: "Sophie Meakin"
+date:  "`r Sys.Date()`"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Creating the public mappings}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include =FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+*Note: The code presented in this vignette is for indicative purposes only as generating the mapping requires confidential data. If you have access to the raw data save it as `data-raw/trust-ltla-mapping/mapping_raw.csv` in the package repository and then run this code to regenerate the mapping.*
+
+# Aim
+
+To create a public (anonymised) mapping between NHS Trusts and local authorities in England based on COVID-19 admissions.
+
+# Summary
+
+The raw mapping, provided by NHS England, is a mapping between NHS sites (e.g. hospitals) and lower-tier local authorities (LTLAs). In summary, to create the public mappings, we:
+
+1. Map NHS sites to NHS Trusts.
+2. Summarise the mapping by Trust and LTLA (or UTLA).
+3. Exclude any Trust-LTLA pairs (or Trust-UTLA pairs) where the number of spells is less than 10.
+4. Summarise the mapping to keep (i) `p_trust`, the proportion of admissions at a given Trust that come from a given LTLA (or UTLA), and (ii) `p_geo`, the proportion of admissions from a given LTLA (or UTLA) that go to a given Trust.
+
+```{r packages}
+library(readr)
+library(dplyr)
+library(janitor)
+library(usethis)
+```
+
+```{r load raw data}
+
+# Site-Trust lookup
+trust_lookup <- readr::read_csv(file = here::here("data-raw", "raw", "england_trusts", "trust_list.csv"),
+                            col_names = FALSE) %>%
+  dplyr::select(trust_code = X1, stp_code = X4) %>%
+  unique()
+
+# Mergers
+trust_mergers <- readr::read_csv(file = here::here("data-raw", "raw", "england_trusts", "trust_mergers.csv"), col_names = TRUE) 
+
+
+# LTLA-UTLA lookup
+ltla_lookup <- readr::read_csv(file = here::here("data-raw", "raw", "england_ltla", "ltla_utla_list.csv"),
+                               col_names = TRUE) %>%
+  dplyr::select(ltla_code = LTLA19CD, utla_code = UTLA19CD)
+
+# NHS site-LTLA mapping
+nhs_mapping_raw <- readr::read_csv(file = here::here("data-raw", "trust-ltla-mapping", "mapping_raw.csv")) %>%
+  janitor::clean_names() %>%
+  dplyr::rename(site_code = der_provider_site_code,
+                ltla_code = der_postcode_dist_unitary_auth,
+                n = spells)
+
+```
+
+```{r process mapping trusts}
+
+# Summarise to create Trust-LTLA mapping
+nhs_mapping_top <- nhs_mapping_raw %>%
+  dplyr::mutate(trust_code = stringr::str_sub(site_code, 1, 3)) %>%
+  dplyr::left_join(trust_mergers, by = c("trust_code" = "trust_code_old")) %>%
+  dplyr::mutate(trust_code = ifelse(!is.na(trust_code_new), trust_code_new, trust_code)) %>%
+  dplyr::group_by(trust_code, ltla_code) %>%
+  dplyr::summarise(n = sum(n, na.rm = TRUE),
+                   .groups = "drop") %>%
+  dplyr::select(trust_code, ltla_code, n)
+
+
+```
+
+```{r process mapping trust-ltla}
+
+# Drop Trust-LTLA pairs where n < 10
+nhs_mapping <- nhs_mapping_top %>%
+  dplyr::rename(geo_code = ltla_code) %>%
+  dplyr::filter(n >= 10)
+
+# Create p_trust and p_ltla
+nhs_mapping_trust <- nhs_mapping %>%
+  dplyr::group_by(trust_code) %>%
+  dplyr::mutate(p_trust = n/sum(n)) %>% 
+  dplyr::select(-n)
+
+nhs_mapping_ltla <- nhs_mapping %>%
+  dplyr::group_by(geo_code) %>%
+  dplyr::mutate(p_geo = n/sum(n)) %>% 
+  dplyr::select(-n)
+
+# Final mapping
+trust_ltla_public <- nhs_mapping_trust %>%
+  dplyr::left_join(nhs_mapping_ltla, by = c("trust_code", "geo_code"))
+
+```
+
+```{r process mapping trust-utla}
+
+nhs_mapping <- nhs_mapping_top %>%
+  dplyr::left_join(ltla_lookup, by = "ltla_code") %>%
+  dplyr::group_by(trust_code, geo_code = utla_code) %>%
+  dplyr::summarise(n = sum(n),
+                   .groups = "drop")
+
+# Drop Trust-LTLA pairs where n < 10
+nhs_mapping <- nhs_mapping %>%
+  dplyr::filter(n >= 10)
+
+# Create p_trust and p_ltla
+nhs_mapping_trust <- nhs_mapping %>%
+  dplyr::group_by(trust_code) %>%
+  dplyr::mutate(p_trust = n/sum(n)) %>% 
+  dplyr::select(-n)
+
+nhs_mapping_utla <- nhs_mapping %>%
+  dplyr::group_by(geo_code) %>%
+  dplyr::mutate(p_geo = n/sum(n)) %>% 
+  dplyr::select(-n)
+
+# Final mapping
+trust_utla_public <- nhs_mapping_trust %>%
+  dplyr::left_join(nhs_mapping_utla, by = c("trust_code", "geo_code"))
+
+```
+
+```{r save mappings}
+
+saveRDS(object = trust_ltla_public,
+        file = here::here("data-raw", "trust-ltla-mapping", "trust_ltla_mapping_public.rds"))
+readr::write_csv(x = trust_ltla_public,
+                 path = here::here("data-raw", "trust-ltla-mapping", "trust_ltla_mapping_public.csv"))
+
+
+saveRDS(object = trust_utla_public,
+        file = here::here("data-raw", "trust-ltla-mapping", "trust_utla_mapping_public.rds"))
+readr::write_csv(x = trust_utla_public,
+                 path = here::here("data-raw", "trust-ltla-mapping", "trust_utla_mapping_public.csv"))
+
+trust_utla_mapping <- trust_utla_public
+usethis::use_data(trust_utla_mapping,  overwrite = TRUE)
+
+trust_ltla_mapping <- trust_ltla_public
+usethis::use_data(trust_ltla_mapping,  overwrite = TRUE)
+
+```
