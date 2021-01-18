@@ -2,7 +2,7 @@ Package: covid19.england.hospitalisations
 Title: Covid 19 England Hospital Admissions
 Version: 0.1.0
 Authors@R: c(person("Sophie", "Meakin",
-                    email = "sophie.meaking@lshtm.ac.uk",
+                    email = "sophie.meakin@lshtm.ac.uk",
                     role = c("aut", "cre")),
     person(given = "Sam", "Abbott",
            role = c("aut"),
