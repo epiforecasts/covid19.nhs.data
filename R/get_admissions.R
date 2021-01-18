@@ -36,7 +36,9 @@ get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping, 
     if (missing(geo_names)) {
       if (level %in% c("utla")) {
         geo_names <- covid19.england.hospitalisations::utla_names
-      }else {
+      }else if (level %in% "ltla") {
+        geo_names <- covid19.england.hospitalisations::ltla_names
+      }else{
         geo_names <- NULL
       }
     }
