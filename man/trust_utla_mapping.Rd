@@ -5,7 +5,7 @@
 \alias{trust_utla_mapping}
 \title{Mapping Between NHS Trust and UTLA}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 426 rows and 4 columns.
+An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 426 rows and 4 columns.
 }
 \usage{
 trust_utla_mapping

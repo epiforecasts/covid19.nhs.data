@@ -3,7 +3,7 @@
 \docType{data}
 \name{england_utla_shape}
 \alias{england_utla_shape}
-\title{Linking File Between UTLA Codes and Names}
+\title{UTLA Shapefile for England}
 \format{
 An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 151 rows and 11 columns.
 }
@@ -11,6 +11,6 @@ An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{dat
 england_utla_shape
 }
 \description{
-Linking File Between UTLA Codes and Names
+UTLA Shapefile for England
 }
 \keyword{datasets}
