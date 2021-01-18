@@ -17,18 +17,23 @@ library(knitr)
 
 # Summary
 
-This package contains a many-to-many mapping between upper-tier local authority districts to NHS Acute Trusts in England, COVID-19 hospital admissions. This mapping can be used to match UTLA-level data, such as testing data, to hospital admissions and other related data that is typically provided at the Trust level.
+This package contains many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England, based on COVID-19 hospital admissions:
 
-The mapping contains the following variables:
+* Trust-UTLA mapping: `covid19.england.hospitalisations::trust_utla_mapping`
+* Trust-LTLA mapping: `covid19.england.hospitalisations::trust_ltla_mapping`
+
+These mappings can be used to map data reported by local authority (e.g. testing) to NHS Trusts, or to map Trust-level data (e.g. admissions) to local authorities.
+
+The mappings contain the following variables:
 
 * `trust_code`: the three-digit organisation code for NHS Trusts.
-* `geo_code`: the nine-digit identifier for upper-tier local authorities in England.
-* `p_trust`: the proportion of admissions to a given Trust were admitted from a given UTLA
-* `p_geo`: the proportion of admissions from a given UTLA that were admitted to a given Trust.
+* `geo_code`: the nine-digit identifier for local authorities (UTLA or LTLA) in England
+* `p_trust`: the proportion of admissions to a given Trust were admitted from a given local authority (UTLA or LTLA)
+* `p_geo`: the proportion of admissions from a given local authority (UTLA or LTLA) that were admitted to a given Trust.
 
 # Usage
 
-The mapping is provided as a built in package dataset and can be loaded directly using `covid19.england.hospitalisations::trust_utla_mapping` or as shown below. 
+The mapping is provided as a built in package dataset and can be loaded directly using `covid19.england.hospitalisations::trust_utla_mapping` and `covid19.england.hospitalisations::trust_ltla_mapping` or as shown below.
 
 
 ## Quick start
@@ -39,7 +44,7 @@ Load the library with:
 library(covid19.england.hospitalisations)
 ```
 
-Load the raw mapping with `trust_utla_mapping`:
+Load the basic Trust-UTLA mapping with `trust_utla_mapping`:
 
 ```{r load_raw_mapping, echo = TRUE, eval = TRUE}
 
@@ -49,7 +54,7 @@ trust_utla_mapping %>%
 
 ```
 
-Add Trust names and upper-tier local authority names to the raw mapping with `get_names()`:
+Add Trust names and local authority names to the raw mapping with `get_names()`:
 
 ```{r add_names, echo = TRUE, eval = TRUE}
 
@@ -60,7 +65,7 @@ trust_utla_mapping %>%
 
 ```
 
-Summarise the mapping for a given Trust (as defined by the Trust organisation code) with `summarise_mapping()`; this will return a table (under `summary_table`) and a visualisation of the Trust-UTLA mapping (under `summary_plot`):
+Summarise the mapping for a given Trust (as defined by the Trust code) with `summarise_mapping()`; this will return a table (under `summary_table`) and a visualisation of the Trust-UTLA mapping (under `summary_plot`):
 
 ```{r summarise for trust, echo = TRUE, eval = TRUE}
 
@@ -73,7 +78,7 @@ summary$summary_plot
 
 ```
 
-Summarise the mapping for a given UTLA (as defined by the UTLA organisation code) with `summarise_mapping()`; this will return a table (under `summary_table`):
+Summarise the mapping for a given local authority (as defined by the UTLA or LTLA code) with `summarise_mapping()`; this will return a table (under `summary_table`):
 
 ```{r summarise for ltla, echo = TRUE, eval = TRUE}
 
@@ -90,6 +95,6 @@ summary$summary_table %>%
 
 The raw (unpublished) mapping was provided by NHS England, This mapping provides the number of COVID-19 spells (discharges) between 01 January 2020 and 30 September 2020 by hospital-LTLA pairs, based on the Secondary Uses Service (SUS) healthcare data for England.
 
-We have summarised the raw mapping to Trust-UTLA (rather than hospital-LTLA) pairs, and to maintain anonymity we excluded any Trust-UTLA pairs where the number of spells is less than 10. Finally, we report only the proportion of admissions by Trust (`p_trust`) or UTLA (`p_utla`).
+We have summarised the raw mapping between Trusts and local authorities (UTLA and LTLA), and to maintain anonymity we excluded any Trust-UTLA or Trust-LTLA pairs where the number of spells is less than 10. Finally, we report only the proportion of admissions by Trust (`p_trust`) or local authority (`p_geo`).
 
 
