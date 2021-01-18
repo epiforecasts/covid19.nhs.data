@@ -22,7 +22,7 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
   }
   
   if (missing(scale_fill)) {
-    scale_fill <- scale_fill_viridis_c(option = "cividis", direction = -1)
+    scale_fill <- scale_fill_viridis_c(option = "viridis", direction = -1)
   }
   
   admissions <- admissions %>% 
