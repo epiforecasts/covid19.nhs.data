@@ -12,7 +12,7 @@
 #' @docType data
 "trust_utla_mapping"
 
-#' Linking File Between NSH Trust Codes and Names
+#' Linking File Between NHS Trust Codes and Names
 #'
 #'
 #' @name trust_names
