@@ -1,0 +1,15 @@
+citHeader("To cite covid19.nhs.data in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "NHS trust level Covid-19 hospital data aggregated to a range of spatial scales",
+  author   = personList(as.person("Sophie Meakin"), as.person("Sam Abbott"), 
+                        as.person("Sebastian Funk")),
+  year     = "2021",
+  doi      = "10.5281/zenodo.4447465",
+  textVersion = paste("Sophie Meakin, Sam Abbott, and Sebastian Funk (2020).",
+        "NHS trust level Covid-19 hospital data aggregated to a range of spatial scales, ",
+        "DOI: 10.5281/zenodo.4447465")
+)
+
+ 

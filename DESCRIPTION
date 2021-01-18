@@ -1,5 +1,5 @@
 Package: covid19.nhs.data
-Title: Covid 19 England Hospital Admissions
+Title: NHS Trust Level Covid-19 Hospital Data Aggregated to a Range of Spatial Scales
 Version: 0.1.0
 Authors@R: c(person("Sophie", "Meakin",
                     email = "sophie.meakin@lshtm.ac.uk",
@@ -11,7 +11,7 @@ Authors@R: c(person("Sophie", "Meakin",
     person("Sebastian", "Funk",
             email = "sebastian.funk@lshtm.ac.uk",
             role = c("aut")))
-Description: Facilitates access to data on English Covid-19 hospital admissions 
+Description: Facilitates access to data on NHS trust level Covid-19 hospital admissions 
     aggregated to a range of spatial scales. 
 Language: en-GB
 License: MIT + file LICENSE
