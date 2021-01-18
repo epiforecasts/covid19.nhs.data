@@ -8,3 +8,4 @@
 ^.*\.Rproj$
 ^codecov\.yml$
 ^pkgdown$
+^README\.Rmd$
