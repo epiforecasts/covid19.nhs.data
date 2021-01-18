@@ -54,7 +54,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
       mutate(p = 100 * p_trust)
     
     ## Visual summary of mapping
-    if (is.null(shapefile)) {
+    if (!is.null(shapefile)) {
       g <- shapefile %>%
         left_join(mapping, by = "geo_code") %>% 
         ggplot() +
