@@ -40,7 +40,8 @@ reference:
   - title: Package Data
     desc: Built in package datasets.
     contents:
-      - contains("_mapping")
+      - contains("utla_mapping")
+      - contains("ltla_mapping")
       - contains("_names")
       - contains("_shape")
   - title: Utilities
