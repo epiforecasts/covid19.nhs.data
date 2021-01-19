@@ -27,7 +27,7 @@ get_admissions <- function(level = "trust", release_date = Sys.Date(), mapping, 
   raw_adm_trust <- download_trust_data(release_date = release_date)
 
   adm <- raw_adm_trust %>%
-    filter(type1_acute, data == "New hosp cases") %>%
+    filter(data == "New hosp cases") %>%
     select(trust_code = org_code, date, admissions = value) %>% 
     left_join(covid19.nhs.data::trust_names, by = "trust_code") %>% 
     select(trust_code, trust_name, date, admissions)

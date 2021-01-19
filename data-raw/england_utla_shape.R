@@ -11,6 +11,7 @@ england_utla_shape <- sf::read_sf(here::here("data-raw", "raw", "uk_utla_shp", "
   dplyr::rename(
     geo_code = ctyua19cd,
     geo_name = ctyua19nm
-  )
+  ) %>%
+  dplyr::mutate(geo_code = ifelse(geo_code == "E10000002", "E06000060", geo_code))
 
 usethis::use_data(england_utla_shape, overwrite = TRUE)
