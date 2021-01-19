@@ -11,7 +11,7 @@
 #' `scale_fill_viridis_c(option = "viridis", direction = -1, na.value = "grey80")`.
 #' @inheritParams summarise_mapping
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_viridis_c labs theme_void theme guides guide_colorbar
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter inner_join
 #' @importFrom lubridate as_date
 #' @import sf 
 #' @return A map of Covid-19 admissions in England 
@@ -37,7 +37,7 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
   }
 
   g <- shapefile %>%
-    left_join(admissions, by = "geo_code") %>% 
+    inner_join(admissions, by = "geo_code") %>% 
     ggplot() +
     geom_sf(data = shapefile, lwd = 0.3, col = "grey60") +
     geom_sf(aes(fill = admissions), lwd = 0.3, col = "grey20") +
