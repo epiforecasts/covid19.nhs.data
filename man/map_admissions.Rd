@@ -15,7 +15,8 @@ Must contain the following variables: \code{geo_code}, \code{date}, and \code{ad
 \item{date}{A date variable (or vector) indicating when to plot data for.}
 
 \item{scale_fill}{A \code{ggplot2} \code{scale_fill} used to define the fill colours
-used in the map. The default is: \code{scale_fill_viridis_c(option = "viridis", direction = -1)}.}
+used in the map. The default is:
+\code{scale_fill_viridis_c(option = "viridis", direction = -1, na.value = "grey80")}.}
 }
 \value{
 A map of Covid-19 admissions in England

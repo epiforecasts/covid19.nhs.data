@@ -5,7 +5,7 @@
 \alias{england_ltla_shape}
 \title{LTLA Shapefile for England}
 \format{
-An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 317 rows and 11 columns.
+An object of class \code{sf} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 314 rows and 11 columns.
 }
 \usage{
 england_ltla_shape
