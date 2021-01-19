@@ -11,6 +11,7 @@
 #' @inheritParams summarise_mapping
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_viridis_c labs theme_void theme guides guide_colorbar
 #' @importFrom dplyr filter
+#' @importFrom lubridate as_date
 #' @import sf 
 #' @return A map of Covid-19 admissions in England 
 #' @export
@@ -19,7 +20,7 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
   if (missing(date)) {
     max_date <- max(admissions$date)
   }else{
-    max_date <- date
+    max_date <- as_date(date)
   }
   
   if (missing(scale_fill)) {
