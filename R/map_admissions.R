@@ -20,8 +20,10 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
   
   if (missing(date)) {
     max_date <- max(admissions$date)
-  }else{
+  }else if (!is.null(date)) {
     max_date <- as_date(date)
+  }else {
+    max_date <- NULL
   }
   
   if (missing(scale_fill)) {
