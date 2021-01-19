@@ -59,7 +59,7 @@ download_trust_data <- function(release_date = Sys.Date()) {
   out <- map_df(.x = sheet_names, .f = ~ {
     dat <- suppressMessages(read_excel(tmp,
       sheet = .x,
-      range = cell_limits(c(15, 1), c(520, NA))
+      range = cell_limits(c(15, 1), c(522, NA))
     )) %>%
       tibble()
 
