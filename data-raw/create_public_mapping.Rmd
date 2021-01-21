@@ -1,5 +1,5 @@
 ---
-title: "Creating the public Trust-LTLA and Trust-UTLA mappings"
+title: "Creating the public mappings"
 author: "Sophie Meakin"
 date:  "`r Sys.Date()`"
 output: html_document
