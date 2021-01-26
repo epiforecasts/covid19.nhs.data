@@ -42,7 +42,7 @@ The mapping includes the following Trust mergers that have taken place since Jan
 
 ```{r mergers}
 
-readr::read_csv(here::here("data-raw", "raw", "england_trusts", "trust_mergers.csv")) %>%
+readr::read_csv("https://raw.githubusercontent.com/epiforecasts/covid19.nhs.data/main/data-raw/raw/england_trusts/trust_list.csv") %>%
   dplyr::select(`Trust code` = trust_code_old, `New Trust code` = trust_code_new, `Merger date` = from_date) %>%
   knitr::kable()
 
