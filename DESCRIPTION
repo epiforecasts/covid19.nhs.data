@@ -43,5 +43,6 @@ Suggests:
     spelling,
     usethis,
     rmarkdown,
+    readr,
     covr
 VignetteBuilder: knitr
