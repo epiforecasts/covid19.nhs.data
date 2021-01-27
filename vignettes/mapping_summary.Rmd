@@ -43,7 +43,7 @@ library(readr)
 library(dplyr)
 library(knitr)
 
-read_csv("https://raw.githubusercontent.com/epiforecasts/covid19.nhs.data/main/data-raw/raw/england_trusts/trust_list.csv") %>%
+read_csv("https://raw.githubusercontent.com/epiforecasts/covid19.nhs.data/main/data-raw/raw/england_trusts/trust_mergers.csv") %>%
   select(`Trust code` = trust_code_old, `New Trust code` = trust_code_new, `Merger date` = from_date) %>%
   kable()
 
