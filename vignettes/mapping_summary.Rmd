@@ -40,7 +40,7 @@ The mapping includes the following Trust mergers that have taken place since Jan
 
 ```{r mergers}
 library(readr)
-librar(dplyr)
+library(dplyr)
 library(knitr)
 
 read_csv("https://raw.githubusercontent.com/epiforecasts/covid19.nhs.data/main/data-raw/raw/england_trusts/trust_list.csv") %>%
