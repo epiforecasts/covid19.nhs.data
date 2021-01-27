@@ -72,7 +72,7 @@ Load the basic Trust-UTLA mapping with `trust_utla_mapping`:
 
 trust_utla_mapping %>%
   head() %>%
-  kable()
+  knitr::kable()
 
 ```
 
@@ -83,7 +83,7 @@ Add Trust names and local authority names to the raw mapping with `get_names()`:
 trust_utla_mapping %>% 
   get_names() %>%
   head() %>%
-  kable()
+  knitr::kable()
 
 ```
 
@@ -94,7 +94,7 @@ Summarise the mapping for a given Trust (as defined by `trust`, a Trust code) wi
 summary <- summarise_mapping(mapping = trust_utla_mapping, trust = "R0A")
 
 summary$summary_table %>%
-  kable()
+  knitr::kable()
 
 summary$summary_plot
 
@@ -107,7 +107,7 @@ Summarise the mapping for a given local authority (as defined `geography`, eithe
 summary <- summarise_mapping(mapping = trust_utla_mapping, geography = "E09000012")
 
 summary$summary_table %>%
-  kable()
+  knitr::kable()
 
 ```
 
