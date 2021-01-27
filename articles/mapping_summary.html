@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mapping local authorities to NHS Acute Trusts in England • covid19.nhs.data</title>
+<title>Trust to local authority mapping overview • covid19.nhs.data</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Mapping local authorities to NHS Acute Trusts in England">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Trust to local authority mapping overview">
 <meta property="og:description" content="covid19.nhs.data">
 <meta property="og:image" content="epiforecasts.io/covid19.nhs.data/reference/figures/map-1.png">
 <meta property="og:image:alt" content="Map of estimated Covid-19 Hospital admissions by lower-tier local authority level.">
@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/create_public_mapping.html">Create public Trust-LTLA mapping from the NHS mapping</a>
+      <a href="../articles/create_public_mapping.html">Creating the public mappings</a>
     </li>
     <li>
-      <a href="../articles/mapping_summary.html">Mapping local authorities to NHS Acute Trusts in England</a>
+      <a href="../articles/mapping_summary.html">Trust to local authority mapping overview</a>
     </li>
   </ul>
 </li>
@@ -84,7 +84,7 @@
       </header><script src="mapping_summary_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Mapping local authorities to NHS Acute Trusts in England</h1>
+      <h1 data-toc-skip>Trust to local authority mapping overview</h1>
                         <h4 class="author">Sophie Meakin</h4>
             
       
@@ -98,25 +98,78 @@
 <div id="summary" class="section level1">
 <h1 class="hasAnchor">
 <a href="#summary" class="anchor"></a>Summary</h1>
-<p>This package contains many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England, based on COVID-19 hospital admissions:</p>
+<p>This package contains two many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England:</p>
 <ul>
 <li>Trust-UTLA mapping: <code><a href="../reference/trust_utla_mapping.html">covid19.nhs.data::trust_utla_mapping</a></code>
 </li>
 <li>Trust-LTLA mapping: <code><a href="../reference/trust_ltla_mapping.html">covid19.nhs.data::trust_ltla_mapping</a></code>
 </li>
 </ul>
-<p>These mappings can be used to map data reported by local authority (e.g. testing) to NHS Trusts, or to map Trust-level data (e.g. admissions) to local authorities.</p>
-<p>The mappings contain the following variables:</p>
+<p>These mappings each contain the following variables:</p>
 <ul>
 <li>
 <code>trust_code</code>: the three-digit organisation code for NHS Trusts.</li>
 <li>
 <code>geo_code</code>: the nine-digit identifier for local authorities (UTLA or LTLA) in England</li>
 <li>
-<code>p_trust</code>: the proportion of admissions to a given Trust were admitted from a given local authority (UTLA or LTLA)</li>
+<code>p_trust</code>: the estimated proportion of admissions to a given Trust were admitted from a given local authority (UTLA or LTLA)</li>
 <li>
-<code>p_geo</code>: the proportion of admissions from a given local authority (UTLA or LTLA) that were admitted to a given Trust.</li>
+<code>p_geo</code>: the estimated proportion of admissions from a given local authority (UTLA or LTLA) that were admitted to a given Trust.</li>
 </ul>
+<p>These mappings are probabilistic estimates based on total COVID-19 discharges until 30 September. These mappings can be used to estimate COVID-19 hospital admissions at the local authority level, or to estimate “relevant” community COVID-19 cases for an NHS Trust. These are estimates only and may not accurately reflect the truth; see limitations below.</p>
+</div>
+<div id="methods" class="section level1">
+<h1 class="hasAnchor">
+<a href="#methods" class="anchor"></a>Methods</h1>
+<p>The mappings in this package are derived from a raw mapping provided by NHS England, based on the Secondary Uses Service (SUS) healthcare data for England. This raw mapping counts the number of COVID-19 hospital discharges of between 01 January 2020 and 30 September 2020 from an NHS site (hospital) to lower-tier local authorities (LTLAs).</p>
+<p>The mappings in this package are summaries of the raw mapping. Site-LTLA pairs are aggregated to Trust-LTLA and Trust-UTLA pairs and to maintain anonymity we excluded any Trust-UTLA or Trust-LTLA pairs where the number of discharges is less than 10. Finally, we report only the proportion of admissions by Trust (<code>p_trust</code>) or local authority (<code>p_geo</code>).</p>
+<p>The mapping includes the following Trust mergers that have taken place since January 2020:</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Trust code</th>
+<th align="left">New Trust code</th>
+<th align="left">Merger date</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">RBA</td>
+<td align="left">RH5</td>
+<td align="left">2020-04-01</td>
+</tr>
+<tr class="even">
+<td align="left">RC1</td>
+<td align="left">RC9</td>
+<td align="left">2020-04-01</td>
+</tr>
+<tr class="odd">
+<td align="left">RA3</td>
+<td align="left">RA7</td>
+<td align="left">2020-04-01</td>
+</tr>
+<tr class="even">
+<td align="left">RQ8</td>
+<td align="left">RAJ</td>
+<td align="left">2020-04-01</td>
+</tr>
+<tr class="odd">
+<td align="left">RDD</td>
+<td align="left">RAJ</td>
+<td align="left">2020-04-01</td>
+</tr>
+<tr class="even">
+<td align="left">RDZ</td>
+<td align="left">R0D</td>
+<td align="left">2020-10-01</td>
+</tr>
+<tr class="odd">
+<td align="left">RD3</td>
+<td align="left">R0D</td>
+<td align="left">2020-10-01</td>
+</tr>
+</tbody>
+</table>
+<p>The mapping also includes the creation of Buckinghamshire unitary authority (UTLA and LTLA; E06000060), replacing Buckinghamshire county (UTLA; E10000002) and four lower-tier local authorities: Aylesbury Vale (E07000004), Chiltern (E07000005), South Bucks (E07000005) and Wycombe (E07000007).</p>
+<p>See <a href="https://epiforecasts.io/covid19.nhs.data/articles/create_public_mapping.html">vignettes/create_public_mapping</a> for full details of how these public mappings were created.</p>
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
@@ -132,7 +185,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">trust_code</th>
@@ -184,7 +237,7 @@
 <code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/get_names.html">get_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="11%">
@@ -253,12 +306,12 @@
 </tr>
 </tbody>
 </table>
-<p>Summarise the mapping for a given Trust (as defined by the Trust code) with <code><a href="../reference/summarise_mapping.html">summarise_mapping()</a></code>; this will return a table (under <code>summary_table</code>) and a visualisation of the Trust-UTLA mapping (under <code>summary_plot</code>):</p>
+<p>Summarise the mapping for a given Trust (as defined by <code>trust</code>, a Trust code) with <code><a href="../reference/summarise_mapping.html">summarise_mapping()</a></code>; this will return a table (under <code>summary_table</code>) and a visualisation of the Trust-UTLA mapping (under <code>summary_plot</code>):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="va">trust_utla_mapping</span>, trust <span class="op">=</span> <span class="st">"R0A"</span><span class="op">)</span>
 
 <span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="12%">
@@ -350,12 +403,12 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">summary</span><span class="op">$</span><span class="va">summary_plot</span></code></pre></div>
 <p><img src="mapping_summary_files/figure-html/summarise%20for%20trust-1.png" width="768"></p>
-<p>Summarise the mapping for a given local authority (as defined by the UTLA or LTLA code) with <code><a href="../reference/summarise_mapping.html">summarise_mapping()</a></code>; this will return a table (under <code>summary_table</code>):</p>
+<p>Summarise the mapping for a given local authority (as defined <code>geography</code>, either a UTLA or LTLA code) with <code><a href="../reference/summarise_mapping.html">summarise_mapping()</a></code>; this will return a table (under <code>summary_table</code>):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="va">trust_utla_mapping</span>, geography <span class="op">=</span> <span class="st">"E09000012"</span><span class="op">)</span>
 
 <span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="10%">
@@ -403,12 +456,6 @@
 </tbody>
 </table>
 </div>
-</div>
-<div id="methods" class="section level1">
-<h1 class="hasAnchor">
-<a href="#methods" class="anchor"></a>Methods</h1>
-<p>The raw (unpublished) mapping was provided by NHS England, This mapping provides the number of COVID-19 spells (discharges) between 01 January 2020 and 30 September 2020 by hospital-LTLA pairs, based on the Secondary Uses Service (SUS) healthcare data for England.</p>
-<p>We have summarised the raw mapping between Trusts and local authorities (UTLA and LTLA), and to maintain anonymity we excluded any Trust-UTLA or Trust-LTLA pairs where the number of spells is less than 10. Finally, we report only the proportion of admissions by Trust (<code>p_trust</code>) or local authority (<code>p_geo</code>).</p>
 </div>
   </div>
 
