@@ -1,9 +1,9 @@
 ---
-title: "Mapping local authorities to NHS Acute Trusts in England"
+title: "Trust to local authority mapping overview"
 author: "Sophie Meakin"
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{Mapping local authorities to NHS Acute Trusts in England}
+  %\VignetteIndexEntry{Trust to local authority mapping overview}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,24 +17,45 @@ library(knitr)
 
 # Summary
 
-This package contains many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England, based on COVID-19 hospital admissions:
+This package contains two many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England:
 
 * Trust-UTLA mapping: `covid19.nhs.data::trust_utla_mapping`
 * Trust-LTLA mapping: `covid19.nhs.data::trust_ltla_mapping`
 
-These mappings can be used to map data reported by local authority (e.g. testing) to NHS Trusts, or to map Trust-level data (e.g. admissions) to local authorities.
-
-The mappings contain the following variables:
+These mappings each contain the following variables:
 
 * `trust_code`: the three-digit organisation code for NHS Trusts.
 * `geo_code`: the nine-digit identifier for local authorities (UTLA or LTLA) in England
-* `p_trust`: the proportion of admissions to a given Trust were admitted from a given local authority (UTLA or LTLA)
-* `p_geo`: the proportion of admissions from a given local authority (UTLA or LTLA) that were admitted to a given Trust.
+* `p_trust`: the estimated proportion of admissions to a given Trust were admitted from a given local authority (UTLA or LTLA)
+* `p_geo`: the estimated proportion of admissions from a given local authority (UTLA or LTLA) that were admitted to a given Trust.
+
+These mappings are probabilistic estimates based on total COVID-19 discharges until 30 September. These mappings can be used to estimate COVID-19 hospital admissions at the local authority level, or to estimate "relevant" community COVID-19 cases for an NHS Trust. These are estimates only and may not accurately reflect the truth; see limitations below.
+
+
+# Methods
+
+The mappings in this package are derived from a raw mapping provided by NHS England, based on the Secondary Uses Service (SUS) healthcare data for England. This raw mapping counts the number of COVID-19 hospital discharges of between 01 January 2020 and 30 September 2020 from an NHS site (hospital) to lower-tier local authorities (LTLAs).
+
+The mappings in this package are summaries of the raw mapping. Site-LTLA pairs are aggregated to Trust-LTLA and Trust-UTLA pairs and to maintain anonymity we excluded any Trust-UTLA or Trust-LTLA pairs where the number of discharges is less than 10. Finally, we report only the proportion of admissions by Trust (`p_trust`) or local authority (`p_geo`).
+
+The mapping includes the following Trust mergers that have taken place since January 2020:
+
+```{r mergers}
+
+readr::read_csv("https://raw.githubusercontent.com/epiforecasts/covid19.nhs.data/main/data-raw/raw/england_trusts/trust_list.csv") %>%
+  dplyr::select(`Trust code` = trust_code_old, `New Trust code` = trust_code_new, `Merger date` = from_date) %>%
+  knitr::kable()
+
+```
+
+The mapping also includes the creation of Buckinghamshire unitary authority (UTLA and LTLA; E06000060), replacing Buckinghamshire county (UTLA; E10000002) and four lower-tier local authorities: Aylesbury Vale (E07000004), Chiltern (E07000005), South Bucks (E07000005) and Wycombe (E07000007).
+
+See [vignettes/create_public_mapping](https://epiforecasts.io/covid19.nhs.data/articles/create_public_mapping.html) for full details of how these public mappings were created.
+
 
 # Usage
 
 The mapping is provided as a built in package dataset and can be loaded directly using `covid19.nhs.data::trust_utla_mapping` and `covid19.nhs.data::trust_ltla_mapping` or as shown below.
-
 
 ## Quick start
 
@@ -65,7 +86,7 @@ trust_utla_mapping %>%
 
 ```
 
-Summarise the mapping for a given Trust (as defined by the Trust code) with `summarise_mapping()`; this will return a table (under `summary_table`) and a visualisation of the Trust-UTLA mapping (under `summary_plot`):
+Summarise the mapping for a given Trust (as defined by `trust`, a Trust code) with `summarise_mapping()`; this will return a table (under `summary_table`) and a visualisation of the Trust-UTLA mapping (under `summary_plot`):
 
 ```{r summarise for trust, echo = TRUE, eval = TRUE}
 
@@ -78,7 +99,7 @@ summary$summary_plot
 
 ```
 
-Summarise the mapping for a given local authority (as defined by the UTLA or LTLA code) with `summarise_mapping()`; this will return a table (under `summary_table`):
+Summarise the mapping for a given local authority (as defined `geography`, either a UTLA or LTLA code) with `summarise_mapping()`; this will return a table (under `summary_table`):
 
 ```{r summarise for ltla, echo = TRUE, eval = TRUE}
 
@@ -88,13 +109,5 @@ summary$summary_table %>%
   knitr::kable()
 
 ```
-
-
-
-# Methods
-
-The raw (unpublished) mapping was provided by NHS England, This mapping provides the number of COVID-19 spells (discharges) between 01 January 2020 and 30 September 2020 by hospital-LTLA pairs, based on the Secondary Uses Service (SUS) healthcare data for England.
-
-We have summarised the raw mapping between Trusts and local authorities (UTLA and LTLA), and to maintain anonymity we excluded any Trust-UTLA or Trust-LTLA pairs where the number of spells is less than 10. Finally, we report only the proportion of admissions by Trust (`p_trust`) or local authority (`p_geo`).
 
 

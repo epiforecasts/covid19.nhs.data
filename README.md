@@ -13,7 +13,7 @@ This package contains a many-to-many mapping between local authority
 districts and NHS Acute Trusts in England; details of this mapping
 (including a summary of the methods and a quick-start guide) can be
 found in
-[vignettes/mapping-summary](https://github.com/epiforecasts/covid19.nhs.data/tree/main/vignettes/mapping-summary).
+[vignettes/mapping-summary](https://epiforecasts.io/covid19.nhs.data/articles/mapping_summary.html).
 
 This package also has functionality to download trust-level hospital
 admissions data, published weekly on the [NHS COVID-19 Hospital

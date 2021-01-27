@@ -1,5 +1,5 @@
 ---
-title: "Creating the public Trust-LTLA and Trust-UTLA mappings"
+title: "Creating the public mappings"
 author: "Sophie Meakin"
 date:  "`r Sys.Date()`"
 output: html_document
@@ -76,29 +76,6 @@ nhs_mapping_top <- nhs_mapping_raw %>%
 
 ```
 
-```{r process mapping trust-ltla}
-
-# Drop Trust-LTLA pairs where n < 10
-nhs_mapping <- nhs_mapping_top %>%
-  dplyr::rename(geo_code = ltla_code) %>%
-  dplyr::filter(n >= 10)
-
-# Create p_trust and p_ltla
-nhs_mapping_trust <- nhs_mapping %>%
-  dplyr::group_by(trust_code) %>%
-  dplyr::mutate(p_trust = n/sum(n)) %>% 
-  dplyr::select(-n)
-
-nhs_mapping_ltla <- nhs_mapping %>%
-  dplyr::group_by(geo_code) %>%
-  dplyr::mutate(p_geo = n/sum(n)) %>% 
-  dplyr::select(-n)
-
-# Final mapping
-trust_ltla_public <- nhs_mapping_trust %>%
-  dplyr::left_join(nhs_mapping_ltla, by = c("trust_code", "geo_code"))
-
-```
 
 ```{r process mapping trust-utla}
 
@@ -128,6 +105,34 @@ trust_utla_public <- nhs_mapping_trust %>%
   dplyr::left_join(nhs_mapping_utla, by = c("trust_code", "geo_code"))
 
 ```
+
+
+
+```{r process mapping trust-ltla}
+
+# Drop Trust-LTLA pairs where n < 10
+nhs_mapping <- nhs_mapping_top %>%
+  dplyr::rename(geo_code = ltla_code) %>%
+  dplyr::filter(n >= 10)
+
+# Create p_trust and p_ltla
+nhs_mapping_trust <- nhs_mapping %>%
+  dplyr::group_by(trust_code) %>%
+  dplyr::mutate(p_trust = n/sum(n)) %>% 
+  dplyr::select(-n)
+
+nhs_mapping_ltla <- nhs_mapping %>%
+  dplyr::group_by(geo_code) %>%
+  dplyr::mutate(p_geo = n/sum(n)) %>% 
+  dplyr::select(-n)
+
+# Final mapping
+trust_ltla_public <- nhs_mapping_trust %>%
+  dplyr::left_join(nhs_mapping_ltla, by = c("trust_code", "geo_code"))
+
+```
+
+
 
 ```{r save mappings}
 
