@@ -54,7 +54,7 @@ download_trust_data <- function(release_date = Sys.Date()) {
   tmp <- file.path(tempdir(), "nhs.xlsx")
   download.file(nhs_url, destfile = tmp, mode = "wb")
 
-  sheet_names <- excel_sheets(tmp)
+  sheet_names <- setdiff(excel_sheets(tmp), "Adult G&A Beds Unoccupied Non")
 
   out <- map_df(.x = sheet_names, .f = ~ {
     dat <- suppressMessages(read_excel(tmp,
@@ -66,7 +66,7 @@ download_trust_data <- function(release_date = Sys.Date()) {
     colnames(dat) <- c(
       colnames(dat)[1:4],
       as.character(seq.Date(
-        from = as.Date("2020-08-01"),
+        from = as.Date(ifelse(grepl("G&A", .x), "2020-11-17", "2020-08-01")),
         by = "day", length = ncol(dat) - 4
       ))
     )
