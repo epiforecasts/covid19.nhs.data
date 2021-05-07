@@ -104,16 +104,9 @@ download_trust_data <- function(release_date = Sys.Date()) {
   if(release_date >= as.Date("2021-04-29")){
     
     nhs_past_url <- paste0(
-      "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/",
-      year(release_date), "/",
-      ifelse(month(release_date) < 10,
-             paste0(0, month(release_date)),
-             month(release_date)
-      ),
+      "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2021/04",
       "/Weekly-covid-admissions-and-beds-publication-",
-      gsub("-", "", as.character(format.Date(release_date, format = "%y-%m-%d"))),
-      "-up-to-210406",
-      ".xlsx"
+      "210429-up-to-210406.xlsx"
     )
     
     download.file(nhs_past_url, destfile = tmp, mode = "wb")
