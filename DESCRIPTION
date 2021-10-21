@@ -3,7 +3,8 @@ Title: NHS Trust Level Covid-19 Data Aggregated to a Range of Spatial Scales
 Version: 0.1.0
 Authors@R: c(person("Sophie", "Meakin",
                     email = "sophie.meakin@lshtm.ac.uk",
-                    role = c("aut", "cre")),
+                    role = c("aut", "cre"),
+                    comment = c(ORCID = "0000-0002-6385-2652")),
     person(given = "Sam", "Abbott",
            role = c("aut"),
            email = "sam.abbott@lshtm.ac.uk",
