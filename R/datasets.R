@@ -46,3 +46,10 @@
 #' @name england_ltla_shape
 #' @docType data
 "england_ltla_shape"
+
+#' List of Trust Mergers
+#'
+#'
+#' @name trust_mergers
+#' @docType data
+"trust_mergers"
