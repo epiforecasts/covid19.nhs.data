@@ -9,7 +9,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include=FALSE}
 
+knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE)
+
+```
 
 *Note: The code presented in this vignette is for indicative purposes only as generating the mapping requires confidential data. If you have access to the raw data save it as `data-raw/trust-ltla-mapping/mapping_raw.csv` in the package repository and then run this code to regenerate the mapping.*
 
@@ -27,7 +31,7 @@ The raw mapping, provided by NHS England, is a mapping between NHS sites (e.g. h
 4. Summarise the mapping to keep (i) `p_trust`, the proportion of admissions at a given Trust that come from a given LTLA (or UTLA), and (ii) `p_geo`, the proportion of admissions from a given LTLA (or UTLA) that go to a given Trust.
 
 
-```r
+```{r}
 library(readr)
 library(dplyr)
 library(janitor)
@@ -35,7 +39,7 @@ library(usethis)
 ```
 
 
-```r
+```{r load_data}
 # Site-Trust lookup
 trust_lookup <- readr::read_csv(file = here::here("data-raw", "raw", "england_trusts", "trust_list.csv"),
                             col_names = FALSE) %>%
@@ -61,7 +65,7 @@ nhs_mapping_raw <- readr::read_csv(file = here::here("data-raw", "trust-ltla-map
 ```
 
 
-```r
+```{r make_trust-ltla_raw_mapping}
 # Summarise to create Trust-LTLA mapping
 nhs_mapping_top <- nhs_mapping_raw %>%
   dplyr::mutate(trust_code = stringr::str_sub(site_code, 1, 3)) %>%
@@ -74,8 +78,7 @@ nhs_mapping_top <- nhs_mapping_raw %>%
 ```
 
 
-
-```r
+```{r make_trust-utla_mapping}
 nhs_mapping <- nhs_mapping_top %>%
   dplyr::left_join(ltla_lookup, by = "ltla_code") %>%
   dplyr::group_by(trust_code, geo_code = utla_code) %>%
@@ -103,9 +106,7 @@ trust_utla_public <- nhs_mapping_trust %>%
 ```
 
 
-
-
-```r
+```{r make_trust-ltla_mapping}
 # Drop Trust-LTLA pairs where n < 10
 nhs_mapping <- nhs_mapping_top %>%
   dplyr::rename(geo_code = ltla_code) %>%
@@ -128,9 +129,7 @@ trust_ltla_public <- nhs_mapping_trust %>%
 ```
 
 
-
-
-```r
+```{r save_mappings}
 saveRDS(object = trust_ltla_public,
         file = here::here("data-raw", "trust-ltla-mapping", "trust_ltla_mapping_public.rds"))
 readr::write_csv(x = trust_ltla_public,
