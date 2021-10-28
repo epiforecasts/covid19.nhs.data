@@ -43,7 +43,8 @@ trust_lookup <- readr::read_csv(file = here::here("data-raw", "raw", "england_tr
   unique()
 
 # Mergers
-trust_mergers <- readr::read_csv(file = here::here("data-raw", "raw", "england_trusts", "trust_mergers.csv"), col_names = TRUE) 
+trust_mergers <- readr::read_csv(file = here::here("data-raw", "raw", "england_trusts", "trust_mergers.csv"), col_names = TRUE) %>%
+dplyr::filter(from_date < Sys.Date())
 
 
 # LTLA-UTLA lookup
