@@ -24,6 +24,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -66,7 +68,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/epiforecasts/covid19.nhs.data/">
+  <a href="https://github.com/epiforecasts/covid19.nhs.data/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,19 +87,19 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Trust to local authority mapping overview</h1>
-                        <h4 class="author">Sophie Meakin</h4>
+                        <h4 data-toc-skip class="author">Sophie Meakin</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/epiforecasts/covid19.nhs.data/blob/master/vignettes/mapping_summary.Rmd"><code>vignettes/mapping_summary.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/epiforecasts/covid19.nhs.data/blob/HEAD/vignettes/mapping_summary.Rmd" class="external-link"><code>vignettes/mapping_summary.Rmd</code></a></small>
       <div class="hidden name"><code>mapping_summary.Rmd</code></div>
 
     </div>
 
     
     
-<div id="summary" class="section level1">
-<h1 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h1>
+<div class="section level1">
+<h1 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h1>
 <p>This package contains two many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England:</p>
 <ul>
 <li>Trust-UTLA mapping: <code><a href="../reference/trust_utla_mapping.html">covid19.nhs.data::trust_utla_mapping</a></code>
@@ -118,9 +120,9 @@
 </ul>
 <p>These mappings are probabilistic estimates based on total COVID-19 discharges until 30 September. These mappings can be used to estimate COVID-19 hospital admissions at the local authority level, or to estimate “relevant” community COVID-19 cases for an NHS Trust. These are estimates only and may not accurately reflect the truth; see limitations below.</p>
 </div>
-<div id="methods" class="section level1">
-<h1 class="hasAnchor">
-<a href="#methods" class="anchor"></a>Methods</h1>
+<div class="section level1">
+<h1 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a>
+</h1>
 <p>The mappings in this package are derived from a raw mapping provided by NHS England, based on the Secondary Uses Service (SUS) healthcare data for England. This raw mapping counts the number of COVID-19 hospital discharges of between 01 January 2020 and 30 September 2020 from an NHS site (hospital) to lower-tier local authorities (LTLAs).</p>
 <p>The mappings in this package are summaries of the raw mapping. Site-LTLA pairs are aggregated to Trust-LTLA and Trust-UTLA pairs and to maintain anonymity we excluded any Trust-UTLA or Trust-LTLA pairs where the number of discharges is less than 10. Finally, we report only the proportion of admissions by Trust (<code>p_trust</code>) or local authority (<code>p_geo</code>).</p>
 <p>The mapping includes the following Trust mergers that have taken place since January 2020:</p>
@@ -171,21 +173,21 @@
 <p>The mapping also includes the creation of Buckinghamshire unitary authority (UTLA and LTLA; E06000060), replacing Buckinghamshire county (UTLA; E10000002) and four lower-tier local authorities: Aylesbury Vale (E07000004), Chiltern (E07000005), South Bucks (E07000005) and Wycombe (E07000007).</p>
 <p>See <a href="https://epiforecasts.io/covid19.nhs.data/articles/create_public_mapping.html">vignettes/create_public_mapping</a> for full details of how these public mappings were created.</p>
 </div>
-<div id="usage" class="section level1">
-<h1 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h1>
+<div class="section level1">
+<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h1>
 <p>The mapping is provided as a built in package dataset and can be loaded directly using <code><a href="../reference/trust_utla_mapping.html">covid19.nhs.data::trust_utla_mapping</a></code> and <code><a href="../reference/trust_ltla_mapping.html">covid19.nhs.data::trust_ltla_mapping</a></code> or as shown below.</p>
-<div id="quick-start" class="section level2">
-<h2 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick start</h2>
+<div class="section level2">
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+</h2>
 <p>Load the library with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/covid19.nhs.data">covid19.nhs.data</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/covid19.nhs.data">covid19.nhs.data</a></span><span class="op">)</span></code></pre></div>
 <p>Load the basic Trust-UTLA mapping with <code>trust_utla_mapping</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">trust_code</th>
@@ -234,10 +236,10 @@
 </table>
 <p>Add Trust names and local authority names to the raw mapping with <code><a href="../reference/get_names.html">get_names()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/get_names.html">get_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/get_names.html">get_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="11%">
@@ -310,8 +312,8 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="va">trust_utla_mapping</span>, trust <span class="op">=</span> <span class="st">"R0A"</span><span class="op">)</span>
 
-<span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="12%">
@@ -407,8 +409,8 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="va">trust_utla_mapping</span>, geography <span class="op">=</span> <span class="st">"E09000012"</span><span class="op">)</span>
 
-<span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="10%">
@@ -470,11 +472,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/">Sam Abbott</a>, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian">Sebastian Funk</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -482,6 +486,8 @@
 
   
 
+
+  
 
   </body>
 </html>

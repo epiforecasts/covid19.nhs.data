@@ -1,51 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//index.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/404.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/download_trust_data.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/england_ltla_shape.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/LICENSE.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/england_utla_shape.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/articles/create_public_mapping.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/get_admissions.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/articles/index.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/get_names.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/articles/mapping_summary.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/ltla_names.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/authors.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/map_admissions.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/index.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/pipe.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/news/index.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/summarise_mapping.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/download_trust_data.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/trust_ltla_mapping.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/england_ltla_shape.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/trust_names.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/england_utla_shape.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/trust_utla_mapping.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/get_admissions.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//reference/utla_names.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/get_names.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//articles/create_public_mapping.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/index.html</loc>
   </url>
   <url>
-    <loc>epiforecasts.io/covid19.nhs.data//articles/mapping_summary.html</loc>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/ltla_names.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/map_admissions.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/summarise_mapping.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/trust_ltla_mapping.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/trust_names.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/trust_utla_mapping.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/utla_names.html</loc>
   </url>
 </urlset>

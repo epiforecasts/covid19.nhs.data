@@ -1,11 +1,11 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1.9000
-pkgdown_sha: 84f234cf19153ce99bf1bcf875dc56248ddf0cbe
+pkgdown: 1.9000.9000.9000
+pkgdown_sha: a96b2672b5ed1d6e666601ef274f36cdf0d1fe76
 articles:
   create_public_mapping: create_public_mapping.html
   mapping_summary: mapping_summary.html
-last_built: 2021-01-28T14:00Z
+last_built: 2021-10-28T08:25Z
 urls:
-  reference: epiforecasts.io/covid19.nhs.data//reference
-  article: epiforecasts.io/covid19.nhs.data//articles
+  reference: epiforecasts.io/covid19.nhs.data/reference
+  article: epiforecasts.io/covid19.nhs.data/articles
 

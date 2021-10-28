@@ -24,6 +24,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -66,7 +68,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/epiforecasts/covid19.nhs.data/">
+  <a href="https://github.com/epiforecasts/covid19.nhs.data/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,11 +87,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating the public mappings</h1>
-                        <h4 class="author">Sophie Meakin</h4>
+                        <h4 data-toc-skip class="author">Sophie Meakin</h4>
             
-            <h4 class="date">2021-01-21</h4>
+            <h4 data-toc-skip class="date">2021-01-21</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/epiforecasts/covid19.nhs.data/blob/master/vignettes/create_public_mapping.Rmd"><code>vignettes/create_public_mapping.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/epiforecasts/covid19.nhs.data/blob/HEAD/vignettes/create_public_mapping.Rmd" class="external-link"><code>vignettes/create_public_mapping.Rmd</code></a></small>
       <div class="hidden name"><code>create_public_mapping.Rmd</code></div>
 
     </div>
@@ -97,14 +99,14 @@
     
     
 <p><em>Note: The code presented in this vignette is for indicative purposes only as generating the mapping requires confidential data. If you have access to the raw data save it as <code>data-raw/trust-ltla-mapping/mapping_raw.csv</code> in the package repository and then run this code to regenerate the mapping.</em></p>
-<div id="aim" class="section level1">
-<h1 class="hasAnchor">
-<a href="#aim" class="anchor"></a>Aim</h1>
+<div class="section level1">
+<h1 id="aim">Aim<a class="anchor" aria-label="anchor" href="#aim"></a>
+</h1>
 <p>To create a public (anonymised) mapping between NHS Trusts and local authorities in England based on COVID-19 admissions.</p>
 </div>
-<div id="summary" class="section level1">
-<h1 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h1>
+<div class="section level1">
+<h1 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h1>
 <p>The raw mapping, provided by NHS England, is a mapping between NHS sites (e.g. hospitals) and lower-tier local authorities (LTLAs). In summary, to create the public mappings, we:</p>
 <ol style="list-style-type: decimal">
 <li>Map NHS sites to NHS Trusts.</li>
@@ -113,104 +115,104 @@
 <li>Summarise the mapping to keep (i) <code>p_trust</code>, the proportion of admissions at a given Trust that come from a given LTLA (or UTLA), and (ii) <code>p_geo</code>, the proportion of admissions from a given LTLA (or UTLA) that go to a given Trust.</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org">usethis</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor" class="external-link">janitor</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Site-Trust lookup</span>
-<span class="va">trust_lookup</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"raw"</span>, <span class="st">"england_trusts"</span>, <span class="st">"trust_list.csv"</span><span class="op">)</span>,
-                            col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>trust_code <span class="op">=</span> <span class="va">X1</span>, stp_code <span class="op">=</span> <span class="va">X4</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">trust_lookup</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"raw"</span>, <span class="st">"england_trusts"</span>, <span class="st">"trust_list.csv"</span><span class="op">)</span>,
+                            col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>trust_code <span class="op">=</span> <span class="va">X1</span>, stp_code <span class="op">=</span> <span class="va">X4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Mergers</span>
-<span class="va">trust_mergers</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"raw"</span>, <span class="st">"england_trusts"</span>, <span class="st">"trust_mergers.csv"</span><span class="op">)</span>, col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> 
+<span class="va">trust_mergers</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"raw"</span>, <span class="st">"england_trusts"</span>, <span class="st">"trust_mergers.csv"</span><span class="op">)</span>, col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> 
 
 
 <span class="co"># LTLA-UTLA lookup</span>
-<span class="va">ltla_lookup</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"raw"</span>, <span class="st">"england_ltla"</span>, <span class="st">"ltla_utla_list.csv"</span><span class="op">)</span>,
-                               col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>ltla_code <span class="op">=</span> <span class="va">LTLA19CD</span>, utla_code <span class="op">=</span> <span class="va">UTLA19CD</span><span class="op">)</span>
+<span class="va">ltla_lookup</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"raw"</span>, <span class="st">"england_ltla"</span>, <span class="st">"ltla_utla_list.csv"</span><span class="op">)</span>,
+                               col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>ltla_code <span class="op">=</span> <span class="va">LTLA19CD</span>, utla_code <span class="op">=</span> <span class="va">UTLA19CD</span><span class="op">)</span>
 
 <span class="co"># NHS site-LTLA mapping</span>
-<span class="va">nhs_mapping_raw</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"mapping_raw.csv"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>site_code <span class="op">=</span> <span class="va">der_provider_site_code</span>,
+<span class="va">nhs_mapping_raw</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"mapping_raw.csv"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>site_code <span class="op">=</span> <span class="va">der_provider_site_code</span>,
                 ltla_code <span class="op">=</span> <span class="va">der_postcode_dist_unitary_auth</span>,
                 n <span class="op">=</span> <span class="va">spells</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Summarise to create Trust-LTLA mapping</span>
-<span class="va">nhs_mapping_top</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_raw</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>trust_code <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">site_code</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">trust_mergers</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"trust_code"</span> <span class="op">=</span> <span class="st">"trust_code_old"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>trust_code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">trust_code_new</span><span class="op">)</span>, <span class="va">trust_code_new</span>, <span class="va">trust_code</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">trust_code</span>, <span class="va">ltla_code</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-                   .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">trust_code</span>, <span class="va">ltla_code</span>, <span class="va">n</span><span class="op">)</span></code></pre></div>
+<span class="va">nhs_mapping_top</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_raw</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>trust_code <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html" class="external-link">str_sub</a></span><span class="op">(</span><span class="va">site_code</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">trust_mergers</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"trust_code"</span> <span class="op">=</span> <span class="st">"trust_code_old"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>trust_code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">trust_code_new</span><span class="op">)</span>, <span class="va">trust_code_new</span>, <span class="va">trust_code</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">trust_code</span>, <span class="va">ltla_code</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+                   .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">trust_code</span>, <span class="va">ltla_code</span>, <span class="va">n</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nhs_mapping</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_top</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">ltla_lookup</span>, by <span class="op">=</span> <span class="st">"ltla_code"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">trust_code</span>, geo_code <span class="op">=</span> <span class="va">utla_code</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">nhs_mapping</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_top</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">ltla_lookup</span>, by <span class="op">=</span> <span class="st">"ltla_code"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">trust_code</span>, geo_code <span class="op">=</span> <span class="va">utla_code</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,
                    .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span>
 
 <span class="co"># Drop Trust-LTLA pairs where n &lt; 10</span>
-<span class="va">nhs_mapping</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">nhs_mapping</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span>
 
 <span class="co"># Create p_trust and p_ltla</span>
-<span class="va">nhs_mapping_trust</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">trust_code</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p_trust <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
+<span class="va">nhs_mapping_trust</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">trust_code</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>p_trust <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
 
-<span class="va">nhs_mapping_utla</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">geo_code</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p_geo <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
+<span class="va">nhs_mapping_utla</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">geo_code</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>p_geo <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
 
 <span class="co"># Final mapping</span>
-<span class="va">trust_utla_public</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_trust</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">nhs_mapping_utla</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"trust_code"</span>, <span class="st">"geo_code"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">trust_utla_public</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_trust</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">nhs_mapping_utla</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"trust_code"</span>, <span class="st">"geo_code"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Drop Trust-LTLA pairs where n &lt; 10</span>
-<span class="va">nhs_mapping</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_top</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>geo_code <span class="op">=</span> <span class="va">ltla_code</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">nhs_mapping</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_top</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>geo_code <span class="op">=</span> <span class="va">ltla_code</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span>
 
 <span class="co"># Create p_trust and p_ltla</span>
-<span class="va">nhs_mapping_trust</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">trust_code</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p_trust <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
+<span class="va">nhs_mapping_trust</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">trust_code</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>p_trust <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
 
-<span class="va">nhs_mapping_ltla</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">geo_code</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p_geo <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
+<span class="va">nhs_mapping_ltla</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">geo_code</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>p_geo <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span>
 
 <span class="co"># Final mapping</span>
-<span class="va">trust_ltla_public</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_trust</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">nhs_mapping_ltla</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"trust_code"</span>, <span class="st">"geo_code"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">trust_ltla_public</span> <span class="op">&lt;-</span> <span class="va">nhs_mapping_trust</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">nhs_mapping_ltla</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"trust_code"</span>, <span class="st">"geo_code"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">trust_ltla_public</span>,
-        file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_ltla_mapping_public.rds"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trust_ltla_public</span>,
-                 path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_ltla_mapping_public.csv"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">trust_ltla_public</span>,
+        file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_ltla_mapping_public.rds"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trust_ltla_public</span>,
+                 path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_ltla_mapping_public.csv"</span><span class="op">)</span><span class="op">)</span>
 
 
-<span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">trust_utla_public</span>,
-        file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_utla_mapping_public.rds"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trust_utla_public</span>,
-                 path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_utla_mapping_public.csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">trust_utla_public</span>,
+        file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_utla_mapping_public.rds"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">trust_utla_public</span>,
+                 path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw"</span>, <span class="st">"trust-ltla-mapping"</span>, <span class="st">"trust_utla_mapping_public.csv"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">trust_utla_mapping</span> <span class="op">&lt;-</span> <span class="va">trust_utla_public</span>
-<span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html">use_data</a></span><span class="op">(</span><span class="va">trust_utla_mapping</span>,  overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">use_data</a></span><span class="op">(</span><span class="va">trust_utla_mapping</span>,  overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="va">trust_ltla_mapping</span> <span class="op">&lt;-</span> <span class="va">trust_ltla_public</span>
-<span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html">use_data</a></span><span class="op">(</span><span class="va">trust_ltla_mapping</span>,  overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">use_data</a></span><span class="op">(</span><span class="va">trust_ltla_mapping</span>,  overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -225,11 +227,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/">Sam Abbott</a>, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian">Sebastian Funk</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -237,6 +241,8 @@
 
   
 
+
+  
 
   </body>
 </html>
