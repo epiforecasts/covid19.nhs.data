@@ -10,3 +10,5 @@
 ^pkgdown$
 ^README\.Rmd$
 ^vignettes/\.gitignore$
+^doc$
+^Meta$
