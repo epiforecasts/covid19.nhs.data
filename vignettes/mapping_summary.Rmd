@@ -11,6 +11,7 @@ vignette: >
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+
 ```
 
 # Summary
@@ -43,8 +44,8 @@ library(readr)
 library(dplyr)
 library(knitr)
 
-read_csv("https://raw.githubusercontent.com/epiforecasts/covid19.nhs.data/main/data-raw/raw/england_trusts/trust_mergers.csv") %>%
-  select(`Trust code` = trust_code_old, `New Trust code` = trust_code_new, `Merger date` = from_date) %>%
+covid19.nhs.data::trust_mergers %>%
+  select(`Old Trust code` = trust_code_old, `New Trust code` = trust_code_new, `Merger date` = from_date) %>%
   kable()
 
 ```

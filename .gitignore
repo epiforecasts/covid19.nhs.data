@@ -4,4 +4,6 @@
 .Ruserdata
 docs
 inst/doc
-data-raw/
+doc/
+Meta/
+data-raw/trust-ltla-mapping/
