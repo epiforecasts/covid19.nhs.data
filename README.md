@@ -26,16 +26,18 @@ and the package documentation for more.
 
 ## Installation
 
-Install the stable development version of the package using
-[`{drat}`](https://epiforecasts.io/drat/):
+Install the stable development version of the package from our
+[r-universe](https://epiforecasts.r-universe.dev):
 
 ``` r
-install.packages("drat")
-drat:::add("epiforecasts")
-install.packages("covid19.nhs.data")
+install.packages(
+  "covid19.nhs.data",
+  repos = c(ropensci = 'https://epiforecasts.r-universe.dev',
+            CRAN = 'https://cloud.r-project.org')
+)
 ```
 
-Install the unstable development version of the package with:
+Or from GitHub:
 
 ``` r
 remotes::install_github("epiforecasts/covid19.nhs.data")
