@@ -1,17 +1,24 @@
 Package: covid19.nhs.data
 Title: NHS Trust Level Covid-19 Data Aggregated to a Range of Spatial Scales
 Version: 0.1.0
-Authors@R: c(person("Sophie", "Meakin",
-                    email = "sophie.meakin@lshtm.ac.uk",
-                    role = c("aut", "cre"),
-                    comment = c(ORCID = "0000-0002-6385-2652")),
+Authors@R: c(
+    person("Sophie", "Meakin",
+           email = "sophie.meakin@lshtm.ac.uk",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6385-2652")),
     person(given = "Sam", "Abbott",
            role = c("aut"),
            email = "sam.abbott@lshtm.ac.uk",
            comment = c(ORCID = "0000-0001-8057-8037")),
+    person("Hannah", "Choi",
+            email = "hannah.choi1@lshtm.ac.uk",
+            role = c("aut")),
     person("Sebastian", "Funk",
             email = "sebastian.funk@lshtm.ac.uk",
-            role = c("aut")))
+            role = c("aut")),
+    person("Hugo", "Gruson",
+            email = "hugo.gruson@lshtm.ac.uk",
+            role = c("ctb")))
 Description: Facilitates access to data on NHS trust level Covid-19 data 
     aggregated to a range of spatial scales. 
 Language: en-GB
