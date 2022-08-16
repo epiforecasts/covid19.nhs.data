@@ -70,11 +70,58 @@ download_trust_data <- function(release_date = Sys.Date()) {
     colnames(dat) <- c(
       colnames(dat)[1:4],
       as.character(seq.Date(
-        from = as.Date("2021-10-01"),
+        from = as.Date("2022-04-01"),
         by = "day", length = ncol(dat) - 4
       ))
     )
 
+    out <- dat %>%
+      pivot_longer(cols = -colnames(dat)[1:4], names_to = "date", values_to = "value") %>%
+      rename(
+        type1_acute = `Type 1 Acute?`,
+        nhs_region = `NHS England Region`,
+        org_code = Code,
+        org_name = Name
+      ) %>%
+      mutate(
+        type1_acute = ifelse(type1_acute == "Yes", TRUE, FALSE),
+        org_code = ifelse(org_code != "-", org_code, NA),
+        date = as.Date(date),
+        data = .x
+      ) %>%
+      filter(!is.na(org_code)) %>%
+      select(data, nhs_region, type1_acute, org_code, org_name, date, value)
+    return(out)
+  }) %>%
+    bind_rows()
+  
+  ## "Weekly Admissions and Beds from 1 October 2021 up to 31 March 2022 (XLSX, 2.6MB)"
+  nhs_url_3 <- paste0(
+    "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2022/05",
+    "/Weekly-covid-admissions-and-beds-publication-",
+    "220512_211001to220331-1.xlsx"
+  )
+  
+  download.file(nhs_url_3, destfile = tmp, mode = "wb")
+  sheet_names <- setdiff(excel_sheets(tmp), c("Adult G&A Beds Unoccupied Non",
+                                              "Adult CC Beds Unoccupied Non",
+                                              "Data quality notes"))
+  
+  out_3 <- map_df(.x = sheet_names, .f = ~ {
+    dat <- suppressMessages(read_excel(tmp,
+                                       sheet = .x,
+                                       range = cell_limits(c(15, 1), c(522, NA))
+    )) %>%
+      tibble()
+    
+    colnames(dat) <- c(
+      colnames(dat)[1:4],
+      as.character(seq.Date(
+        from = as.Date("2021-10-01"),
+        by = "day", length = ncol(dat) - 4
+      ))
+    )
+    
     out <- dat %>%
       pivot_longer(cols = -colnames(dat)[1:4], names_to = "date", values_to = "value") %>%
       rename(
@@ -192,6 +239,7 @@ download_trust_data <- function(release_date = Sys.Date()) {
   
   ## Combine three files, filter by release date
   out <- out_current %>%
+    bind_rows(out_3) %>%
     bind_rows(out_2) %>%
     bind_rows(out_1) %>%
     filter(date <= release_date) %>%
