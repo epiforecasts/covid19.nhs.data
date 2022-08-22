@@ -1,5 +1,5 @@
 Package: covid19.nhs.data
-Title: NHS Trust Level Covid-19 Data Aggregated to a Range of Spatial Scales
+Title: NHS Trust Level COVID-19 Data Aggregated to a Range of Spatial Scales
 Version: 0.1.0
 Authors@R: c(
     person("Sophie", "Meakin",
@@ -19,7 +19,7 @@ Authors@R: c(
     person("Hugo", "Gruson",
             email = "hugo.gruson@lshtm.ac.uk",
             role = c("ctb")))
-Description: Facilitates access to data on NHS trust level Covid-19 data 
+Description: Facilitates access to data on NHS trust level COVID-19 data 
     aggregated to a range of spatial scales. 
 Language: en-GB
 License: MIT + file LICENSE
