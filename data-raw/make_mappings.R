@@ -70,8 +70,8 @@ ltla_trust_hes <- ltla_trust_hes_private %>%
   ungroup() %>%
   arrange(ltla_code, trust_code) %>%
   rename(geo_code = ltla_code) %>%
-  mutate(source = "HES",
-         level = "ltla")
+  mutate(map_source = "HES",
+         map_level = "ltla")
 
 # Make UTLA-Trust mapping (public)
 utla_trust_hes <- ltla_trust_hes_private %>%
@@ -91,8 +91,8 @@ utla_trust_hes <- ltla_trust_hes_private %>%
   ungroup() %>%
   arrange(utla_code, trust_code)  %>%
   rename(geo_code = utla_code) %>%
-  mutate(source = "HES",
-         level = "utla")
+  mutate(map_source = "HES",
+         map_level = "utla")
 
 
 
@@ -164,8 +164,8 @@ ltla_trust_link <- ltla_trust_link_private %>%
   ungroup() %>%
   arrange(ltla_code, trust_code) %>%
   rename(geo_code = ltla_code) %>%
-  mutate(source = "Link",
-         level = "ltla")
+  mutate(map_source = "Link",
+         map_level = "ltla")
 
 # Make UTLA-Trust mapping (public)
 utla_trust_link <- ltla_trust_link_private %>%
@@ -185,8 +185,8 @@ utla_trust_link <- ltla_trust_link_private %>%
   ungroup() %>%
   arrange(utla_code, trust_code) %>%
   rename(geo_code = utla_code) %>%
-  mutate(source = "Link",
-         level = "utla")
+  mutate(map_source = "Link",
+         map_level = "utla")
 
 
 
