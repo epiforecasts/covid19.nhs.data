@@ -16,7 +16,7 @@ pacman::p_load_gh(
 
 
 
-# HES mapping (until September 2020) --------------------------------------
+# SUS mapping (until September 2020) --------------------------------------
 
 # Load raw data
 
@@ -44,7 +44,7 @@ nhs_mapping_raw <- import(file = here("data-raw", "trust-ltla-mapping", "mapping
 
 
 # Make LTLA-Trust mapping (private)
-ltla_trust_hes_private <- nhs_mapping_raw %>%
+ltla_trust_sus_private <- nhs_mapping_raw %>%
   mutate(trust_code = str_sub(site_code, 1, 3)) %>%
   # Trust changes (mergers)
   left_join(trust_mergers %>%
@@ -57,7 +57,7 @@ ltla_trust_hes_private <- nhs_mapping_raw %>%
             .groups = "drop")
 
 # Make LTLA-Trust mapping (public)
-ltla_trust_hes <- ltla_trust_hes_private %>%
+ltla_trust_sus <- ltla_trust_sus_private %>%
   # Drop pairs where there are fewer than 10 admissions
   filter(n >= 10) %>%
   # Get % LTLA to Trust
@@ -70,11 +70,11 @@ ltla_trust_hes <- ltla_trust_hes_private %>%
   ungroup() %>%
   arrange(ltla_code, trust_code) %>%
   rename(geo_code = ltla_code) %>%
-  mutate(map_source = "HES",
+  mutate(map_source = "SUS",
          map_level = "ltla")
 
 # Make UTLA-Trust mapping (public)
-utla_trust_hes <- ltla_trust_hes_private %>%
+utla_trust_sus <- ltla_trust_sus_private %>%
   left_join(ltla_utla_lookup, by = "ltla_code") %>%
   group_by(utla_code, trust_code) %>%
   summarise(n = sum(n),
@@ -91,7 +91,7 @@ utla_trust_hes <- ltla_trust_hes_private %>%
   ungroup() %>%
   arrange(utla_code, trust_code)  %>%
   rename(geo_code = utla_code) %>%
-  mutate(map_source = "HES",
+  mutate(map_source = "SUS",
          map_level = "utla")
 
 
@@ -192,8 +192,8 @@ utla_trust_link <- ltla_trust_link_private %>%
 
 # Combine all mappings ----------------------------------------------------
 
-mappings <- ltla_trust_hes %>%
-  bind_rows(utla_trust_hes) %>%
+mappings <- ltla_trust_sus %>%
+  bind_rows(utla_trust_sus) %>%
   bind_rows(ltla_trust_link) %>%
   bind_rows(utla_trust_link)
 
