@@ -30,7 +30,7 @@ Mappings are derived from a raw mapping provided by NHS England, based on the Se
 1.  Map NHS sites to NHS Trusts.
 2.  Count the number of hospital spells for each LTLA-Trust (or UTLA-Trust) pair.
 3.  Exclude any LTLA-Trust (or UTLA-Trust) pairs for which the number of hospital spells is fewer than 10.
-4.  Calculate (ii) `p_geo`, the proportion of all admissions from a given LTLA (or UTLA) to a given Trust, and (ii) `p_trust`, the proportion of all admissions to a given Trust that are from a given LTLA (or UTLA).
+4.  Calculate (i) `p_geo`, the proportion of all admissions from a given LTLA (or UTLA) that were admitted to a given Trust, and (ii) `p_trust`, the proportion of all admissions to a given Trust that were admitted from a given LTLA (or UTLA).
 
 ## Linked COVID-19 cases and admissions
 
@@ -43,4 +43,4 @@ Mappings are derived from COVID-19 cases and hospital admissions linelist data l
 5.  Amongst all remaining matches, keep the first admission of each case only.
 6.  Count the number of linked case-admissions for each LTLA-Trust (or UTLA-Trust) combination.
 7.  Exclude any LTLA-Trust (or UTLA-Trust) pairs for which the number of hospital spells is fewer than 10.
-8.  Calculate (ii) `p_geo`, the proportion of all admissions from a given LTLA (or UTLA) to a given Trust, and (ii) `p_trust`, the proportion of all admissions to a given Trust that are from a given LTLA (or UTLA).
+8.  Calculate (i) `p_geo`, the proportion of all admissions from a given LTLA (or UTLA) that were admitted to a given Trust, and (ii) `p_trust`, the proportion of all admissions to a given Trust that were admitted from a given LTLA (or UTLA).
