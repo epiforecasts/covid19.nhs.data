@@ -35,7 +35,7 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
     admissions <- admissions %>% 
       filter(date %in% max_date)
   }
-
+  
   g <- shapefile %>%
     inner_join(admissions, by = "geo_code") %>% 
     ggplot() +
@@ -45,7 +45,6 @@ map_admissions <- function(admissions, shapefile, date, scale_fill) {
     theme_void() +
     guides(fill = guide_colorbar(title = "Admissions")) +
     theme(legend.position = "bottom", legend.justification = "left")
-
+  
   return(g)
 }
-

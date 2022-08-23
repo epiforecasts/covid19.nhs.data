@@ -71,7 +71,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
   } else if (!is.null(geography)){
     
     geography <- toupper(geography)
-  
+    
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(geo_code == geography) %>% 
@@ -82,4 +82,3 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     return(list(summary_table = tb))
   }
 }
-
