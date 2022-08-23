@@ -14,7 +14,7 @@ get_names <- function(mapping, geo_names) {
   } else {
     # Geography names checks
     if (missing(geo_names)) {
-      stop("Missing geo_names - please specify geography names.")
+      stop("Missing geo_names - please specify appropriate geography names.")
     }
   }
   
