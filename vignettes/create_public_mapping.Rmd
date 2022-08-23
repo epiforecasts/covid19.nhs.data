@@ -13,6 +13,13 @@ vignette: >
 
 knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE)
 
+pacman::p_load(
+  magrittr,
+  dplyr,
+  knitr,
+  kableExtra
+)
+
 ```
 
 # Aim
@@ -44,3 +51,35 @@ Mappings are derived from COVID-19 cases and hospital admissions linelist data l
 6.  Count the number of linked case-admissions for each LTLA-Trust (or UTLA-Trust) combination.
 7.  Exclude any LTLA-Trust (or UTLA-Trust) pairs for which the number of hospital spells is fewer than 10.
 8.  Calculate (i) `p_geo`, the proportion of all admissions from a given LTLA (or UTLA) that were admitted to a given Trust, and (ii) `p_trust`, the proportion of all admissions to a given Trust that were admitted from a given LTLA (or UTLA).
+
+
+## Local authority and Trust mergers
+
+The mapping includes the following local authority (LA) mergers that have taken place since January 2020:
+
+```{r}
+
+hospitalcatchment.utils::la_changes %>%
+  filter(substr(la_level, 1, 1) == "E",
+         from_date > as.Date("2019-12-31")) %>%
+  mutate(Change = ifelse(is.na(la_code_new), "Abolished", "Merged")) %>%
+  arrange(from_date, la_code_new) %>%
+  select(`Old LA code` = la_code,
+         `New LA code` = la_code_new,
+         Change,
+         `Date effective` = from_date)
+
+```
+
+The mapping includes the following Trust mergers that have taken place since January 2020:
+
+```{r}
+
+hospitalcatchment.utils::download_nhs_mergers() %>%
+  filter(!(org_code_old == "RW6" & org_code == "R0A")) %>%
+  select(`Old Trust code` = org_code_old,
+         `New Trust code` = org_code,
+         `Date effective` = date_effective) %>%
+  kable()
+
+```
