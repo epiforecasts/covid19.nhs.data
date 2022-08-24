@@ -46,6 +46,7 @@ nhs_mapping_raw <- import(file = here("data-raw", "trust-ltla-mapping", "mapping
 # Make LTLA-Trust mapping (private)
 ltla_trust_sus_private <- nhs_mapping_raw %>%
   mutate(trust_code = str_sub(site_code, 1, 3)) %>%
+  filter(substr(trust_code, 1, 1) == "R") %>%
   # Trust changes (mergers)
   left_join(trust_mergers %>%
               filter(date_effective < as.Date("2020-10-01")),
