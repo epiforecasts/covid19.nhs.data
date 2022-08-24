@@ -4,9 +4,17 @@
 \alias{get_admissions}
 \title{Get Hospital Admissions}
 \usage{
-get_admissions(level = "trust", release_date = Sys.Date(), mapping, geo_names)
+get_admissions(
+  keep_vars = "new_adm",
+  level = "trust",
+  release_date = Sys.Date(),
+  mapping,
+  geo_names
+)
 }
 \arguments{
+\item{keep_vars}{Character string, defaulting to "new_adm" (first-time COVID-19 hospital admissions). Defines which variables to keep from the raw data. Other supported options are: "all_adm" (for all COVID-19 hospital admissions), and "all_bed" (for all COVID-19 beds occupied). Multiple values allowed.}
+
 \item{level}{Character string, defaulting to "trust". Defines the level of aggregation
 at which to return the data. Other supported options are "utla" for UTLA level admissions
 or "ltla" for LTLA level admissions.}
@@ -21,7 +29,7 @@ Defaults to \code{trust_utla_mapping} if not supplied.}
 assign meaningful to geographies.}
 }
 \value{
-A data.frame of admissions by day either at trust, LTLA or UTLA levels.
+A data.frame of daily admissions and/or bed occupancy data, reported at the Trust, LTLA or UTLA level. Note that new admissions ("new_adm") are called "admissions" in the data.frame to be consistent with a previous version of this function.
 }
 \description{
 Downloads hospital admissions by Hospital trust using
