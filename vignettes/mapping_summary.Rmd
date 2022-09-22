@@ -33,7 +33,7 @@ These mappings can be used to estimate COVID-19 hospital admissions at the local
 
 Install the package from GitHub:
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, eval = FALSE}
 devtools::install_github("epiforecasts/covid19.nhs.data")
 ```
 
@@ -41,6 +41,7 @@ and load the library:
 
 ```{r package, echo = TRUE, eval = TRUE}
 library(covid19.nhs.data)
+library(kableExtra)
 ```
 
 ## Access the mappings

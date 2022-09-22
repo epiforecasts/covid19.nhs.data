@@ -22,10 +22,9 @@ or "ltla" for LTLA level admissions.}
 \item{release_date}{Date, release date of data to download. Will automatically find
 the Thursday prior to the date specified.}
 
-\item{mapping}{data.frame containing trust_code, p_trust, geo_code and p_geo.
-Defaults to \code{trust_utla_mapping} if not supplied.}
+\item{mapping}{A data.frame containing geo_code, trust_code, p_geo and p_trust.}
 
-\item{geo_names}{A dataframe containing \code{geo_code} and \code{geo_name}. Used to
+\item{geo_names}{A data.frame containing \code{geo_code} and \code{geo_name}. Used to
 assign meaningful to geographies.}
 }
 \value{
