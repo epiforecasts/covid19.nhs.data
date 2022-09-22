@@ -35,7 +35,7 @@ load_mapping <- function(scale, source) {
   }
   
   # Return mapping
-  out <- covid19.nhs.data::mappings %>%
+  out <- covid19.nhs.data:::mappings %>%
     filter(map_source == source,
            map_level == scale) %>%
     select(-c(map_source, map_level))
