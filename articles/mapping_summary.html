@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trust to local authority mapping overview • covid19.nhs.data</title>
+<title>Overview of LTLA- and UTLA-Trust COVID-19 mappings • covid19.nhs.data</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Trust to local authority mapping overview">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Overview of LTLA- and UTLA-Trust COVID-19 mappings">
 <meta property="og:description" content="covid19.nhs.data">
 <meta property="og:image" content="epiforecasts.io/covid19.nhs.data/reference/figures/map-1.png">
 <meta property="og:image:alt" content="Map of estimated Covid-19 Hospital admissions by lower-tier local authority level.">
@@ -48,7 +48,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -58,7 +58,7 @@
       <a href="../articles/create_public_mapping.html">Creating the public mappings</a>
     </li>
     <li>
-      <a href="../articles/mapping_summary.html">Trust to local authority mapping overview</a>
+      <a href="../articles/mapping_summary.html">Overview of LTLA- and UTLA-Trust COVID-19 mappings</a>
     </li>
   </ul>
 </li>
@@ -83,10 +83,11 @@
 
       
 
-      </header><script src="mapping_summary_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="mapping_summary_files/kePrint-0.0.1/kePrint.js"></script><link href="mapping_summary_files/lightable-0.0.1/lightable.css" rel="stylesheet">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Trust to local authority mapping overview</h1>
+      <h1 data-toc-skip>Overview of LTLA- and UTLA-Trust COVID-19 mappings</h1>
                         <h4 data-toc-skip class="author">Sophie Meakin</h4>
             
       
@@ -97,383 +98,603 @@
 
     
     
-<div class="section level1">
-<h1 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
-</h1>
-<p>This package contains two many-to-many mappings between local authority districts (UTLA and LTLA) and NHS Acute Trusts in England:</p>
-<ul>
-<li>Trust-UTLA mapping: <code><a href="../reference/trust_utla_mapping.html">covid19.nhs.data::trust_utla_mapping</a></code>
-</li>
-<li>Trust-LTLA mapping: <code><a href="../reference/trust_ltla_mapping.html">covid19.nhs.data::trust_ltla_mapping</a></code>
-</li>
-</ul>
-<p>These mappings each contain the following variables:</p>
-<ul>
-<li>
-<code>trust_code</code>: the three-digit organisation code for NHS Trusts.</li>
-<li>
-<code>geo_code</code>: the nine-digit identifier for local authorities (UTLA or LTLA) in England</li>
-<li>
-<code>p_trust</code>: the estimated proportion of admissions to a given Trust were admitted from a given local authority (UTLA or LTLA)</li>
-<li>
-<code>p_geo</code>: the estimated proportion of admissions from a given local authority (UTLA or LTLA) that were admitted to a given Trust.</li>
-</ul>
-<p>These mappings are probabilistic estimates based on total COVID-19 discharges until 30 September. These mappings can be used to estimate COVID-19 hospital admissions at the local authority level, or to estimate “relevant” community COVID-19 cases for an NHS Trust. These are estimates only and may not accurately reflect the truth; see limitations below.</p>
-</div>
-<div class="section level1">
-<h1 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a>
-</h1>
-<p>The mappings in this package are derived from a raw mapping provided by NHS England, based on the Secondary Uses Service (SUS) healthcare data for England. This raw mapping counts the number of COVID-19 hospital discharges of between 01 January 2020 and 30 September 2020 from an NHS site (hospital) to lower-tier local authorities (LTLAs).</p>
-<p>The mappings in this package are summaries of the raw mapping. Site-LTLA pairs are aggregated to Trust-LTLA and Trust-UTLA pairs and to maintain anonymity we excluded any Trust-UTLA or Trust-LTLA pairs where the number of discharges is less than 10. Finally, we report only the proportion of admissions by Trust (<code>p_trust</code>) or local authority (<code>p_geo</code>).</p>
-<p>The mapping includes the following Trust mergers that have taken place since January 2020:</p>
-<table class="table">
-<thead><tr class="header">
-<th align="left">Trust code</th>
-<th align="left">New Trust code</th>
-<th align="left">Merger date</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">RBA</td>
-<td align="left">RH5</td>
-<td align="left">2020-04-01</td>
-</tr>
-<tr class="even">
-<td align="left">RC1</td>
-<td align="left">RC9</td>
-<td align="left">2020-04-01</td>
-</tr>
-<tr class="odd">
-<td align="left">RA3</td>
-<td align="left">RA7</td>
-<td align="left">2020-04-01</td>
-</tr>
-<tr class="even">
-<td align="left">RQ8</td>
-<td align="left">RAJ</td>
-<td align="left">2020-04-01</td>
-</tr>
-<tr class="odd">
-<td align="left">RDD</td>
-<td align="left">RAJ</td>
-<td align="left">2020-04-01</td>
-</tr>
-<tr class="even">
-<td align="left">RDZ</td>
-<td align="left">R0D</td>
-<td align="left">2020-10-01</td>
-</tr>
-<tr class="odd">
-<td align="left">RD3</td>
-<td align="left">R0D</td>
-<td align="left">2020-10-01</td>
-</tr>
-<tr class="even">
-<td align="left">RT3</td>
-<td align="left">RJ1</td>
-<td align="left">2021-02-01</td>
-</tr>
-<tr class="odd">
-<td align="left">RXH</td>
-<td align="left">RYR</td>
-<td align="left">2021-04-01</td>
-</tr>
-<tr class="even">
-<td align="left">RTV</td>
-<td align="left">RW4</td>
-<td align="left">2021-06-01</td>
-</tr>
-<tr class="odd">
-<td align="left">RW6</td>
-<td align="left">RM3</td>
-<td align="left">2021-10-01</td>
-</tr>
-</tbody>
-</table>
-<p>The mapping also includes the creation of Buckinghamshire unitary authority (UTLA and LTLA; E06000060), replacing Buckinghamshire county (UTLA; E10000002) and four lower-tier local authorities: Aylesbury Vale (E07000004), Chiltern (E07000005), South Bucks (E07000005) and Wycombe (E07000007).</p>
-<p>See <a href="https://epiforecasts.io/covid19.nhs.data/articles/create_public_mapping.html">vignettes/create_public_mapping</a> for full details of how these public mappings were created.</p>
-</div>
-<div class="section level1">
-<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
-</h1>
-<p>The mapping is provided as a built in package dataset and can be loaded directly using <code><a href="../reference/trust_utla_mapping.html">covid19.nhs.data::trust_utla_mapping</a></code> and <code><a href="../reference/trust_ltla_mapping.html">covid19.nhs.data::trust_ltla_mapping</a></code> or as shown below.</p>
 <div class="section level2">
-<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>Load the library with:</p>
+<p>The <code>covid19.nhs.data</code> package contains four many-to-many (overlapping) mappings between local authority districts (upper- and lower-tier) and NHS Acute Trusts in England. Each mapping contains the following variables:</p>
+<ul>
+<li>
+<code>geo_code</code>: A 9-digit identifier for local authorities (UTLA or LTLA) in England.</li>
+<li>
+<code>trust_code</code>: A 3-digit organisation code for NHS Trusts.</li>
+<li>
+<code>p_geo</code>: The proportion of all admissions from a given local authority (LTLA or UTLA) that were admitted to a given Trust, estimated from one of two datasets (see below).</li>
+<li>
+<code>p_trust</code>: The proportion of all admissions to a given Trust that were admitted from a given local authority (LTLA or UTLA), estimated from one of two datasets (see below).</li>
+</ul>
+<p>These mappings are probabilistic estimates based on Secondary Uses Service (SUS) healthcare data for England (January - September 2020, inclusive), and linked COVID-19 cases and admissions (June 2020 - May 2021, inclusive). Please see the vignette <a href="https://epiforecasts.io/covid19.nhs.data/articles/create_public_mapping.html">“Creating the public mappings”</a> for details of how the mappings are made.</p>
+<p>These mappings can be used to estimate COVID-19 hospital admissions at the local authority level, or to estimate “relevant” community COVID-19 cases for an NHS Trust. These are estimates only and may not accurately reflect the truth; see limitations below.</p>
+</div>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="section level3">
+<h3 id="get-started">Get started<a class="anchor" aria-label="anchor" href="#get-started"></a>
+</h3>
+<p>Install the package from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/covid19.nhs.data">covid19.nhs.data</a></span><span class="op">)</span></code></pre></div>
-<p>Load the basic Trust-UTLA mapping with <code>trust_utla_mapping</code>:</p>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"epiforecasts/covid19.nhs.data"</span><span class="op">)</span></span></code></pre></div>
+<p>and load the library:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">trust_code</th>
-<th align="left">geo_code</th>
-<th align="right">p_trust</th>
-<th align="right">p_geo</th>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://epiforecasts.io/covid19.nhs.data">covid19.nhs.data</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="access-the-mappings">Access the mappings<a class="anchor" aria-label="anchor" href="#access-the-mappings"></a>
+</h3>
+<p>Access the mappings with <code><a href="../reference/load_mapping.html">load_mapping()</a></code>, specifying the geographical scale (“ltla” or “utla”) and the data source (“sus” or “link”):</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/load_mapping.html">load_mapping</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"ltla"</span>, source <span class="op">=</span> <span class="st">"link"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable_styling</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">
+geo_code
+</th>
+<th style="text-align:left;">
+trust_code
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+p_geo
+</th>
+<th style="text-align:right;">
+p_trust
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">E06000049</td>
-<td align="right">0.0411639</td>
-<td align="right">0.0850440</td>
+<tr>
+<td style="text-align:left;">
+E06000001
+</td>
+<td style="text-align:left;">
+R0A
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+0.0275229
+</td>
+<td style="text-align:right;">
+0.0015084
+</td>
 </tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">E08000002</td>
-<td align="right">0.0085167</td>
-<td align="right">0.0336134</td>
+<tr>
+<td style="text-align:left;">
+E06000001
+</td>
+<td style="text-align:left;">
+RVW
+</td>
+<td style="text-align:right;">
+392
+</td>
+<td style="text-align:right;">
+0.7192661
+</td>
+<td style="text-align:right;">
+0.3576642
+</td>
 </tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">E08000003</td>
-<td align="right">0.4953868</td>
-<td align="right">0.7620087</td>
+<tr>
+<td style="text-align:left;">
+E06000001
+</td>
+<td style="text-align:left;">
+RXF
+</td>
+<td style="text-align:right;">
+138
+</td>
+<td style="text-align:right;">
+0.2532110
+</td>
+<td style="text-align:right;">
+0.0158548
+</td>
 </tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">E08000004</td>
-<td align="right">0.0163236</td>
-<td align="right">0.0430712</td>
+<tr>
+<td style="text-align:left;">
+E06000002
+</td>
+<td style="text-align:left;">
+RTR
+</td>
+<td style="text-align:right;">
+322
+</td>
+<td style="text-align:right;">
+0.6694387
+</td>
+<td style="text-align:right;">
+0.4593438
+</td>
 </tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">E08000005</td>
-<td align="right">0.0085167</td>
-<td align="right">0.0277136</td>
+<tr>
+<td style="text-align:left;">
+E06000002
+</td>
+<td style="text-align:left;">
+RVW
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+0.0873181
+</td>
+<td style="text-align:right;">
+0.0383212
+</td>
 </tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">E08000006</td>
-<td align="right">0.0078070</td>
-<td align="right">0.0246085</td>
+<tr>
+<td style="text-align:left;">
+E06000002
+</td>
+<td style="text-align:left;">
+RXF
+</td>
+<td style="text-align:right;">
+117
+</td>
+<td style="text-align:right;">
+0.2432432
+</td>
+<td style="text-align:right;">
+0.0134421
+</td>
 </tr>
 </tbody>
 </table>
 <p>Add Trust names and local authority names to the raw mapping with <code><a href="../reference/get_names.html">get_names()</a></code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trust_utla_mapping</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/get_names.html">get_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="11%">
-<col width="43%">
-<col width="10%">
-<col width="14%">
-<col width="10%">
-<col width="10%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">trust_code</th>
-<th align="left">trust_name</th>
-<th align="left">geo_code</th>
-<th align="left">geo_name</th>
-<th align="right">p_trust</th>
-<th align="right">p_geo</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E06000049</td>
-<td align="left">Cheshire East</td>
-<td align="right">0.0411639</td>
-<td align="right">0.0850440</td>
-</tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000002</td>
-<td align="left">Bury</td>
-<td align="right">0.0085167</td>
-<td align="right">0.0336134</td>
-</tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000003</td>
-<td align="left">Manchester</td>
-<td align="right">0.4953868</td>
-<td align="right">0.7620087</td>
-</tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000004</td>
-<td align="left">Oldham</td>
-<td align="right">0.0163236</td>
-<td align="right">0.0430712</td>
-</tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000005</td>
-<td align="left">Rochdale</td>
-<td align="right">0.0085167</td>
-<td align="right">0.0277136</td>
-</tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000006</td>
-<td align="left">Salford</td>
-<td align="right">0.0078070</td>
-<td align="right">0.0246085</td>
-</tr>
-</tbody>
-</table>
-<p>Summarise the mapping for a given Trust (as defined by <code>trust</code>, a Trust code) with <code><a href="../reference/summarise_mapping.html">summarise_mapping()</a></code>; this will return a table (under <code>summary_table</code>) and a visualisation of the Trust-UTLA mapping (under <code>summary_plot</code>):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="va">trust_utla_mapping</span>, trust <span class="op">=</span> <span class="st">"R0A"</span><span class="op">)</span>
-
-<span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="12%">
-<col width="48%">
-<col width="11%">
-<col width="15%">
-<col width="11%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">trust_code</th>
-<th align="left">trust_name</th>
-<th align="left">geo_code</th>
-<th align="left">geo_name</th>
-<th align="right">p_trust</th>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/load_mapping.html">load_mapping</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"ltla"</span>, source <span class="op">=</span> <span class="st">"link"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/get_names.html">get_names</a></span><span class="op">(</span>geo_names <span class="op">=</span> <span class="va">ltla_names</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable_styling</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">
+trust_code
+</th>
+<th style="text-align:left;">
+trust_name
+</th>
+<th style="text-align:left;">
+geo_code
+</th>
+<th style="text-align:left;">
+geo_name
+</th>
+<th style="text-align:right;">
+p_trust
+</th>
+<th style="text-align:right;">
+p_geo
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000003</td>
-<td align="left">Manchester</td>
-<td align="right">0.4953868</td>
+<tr>
+<td style="text-align:left;">
+R0A
+</td>
+<td style="text-align:left;">
+Manchester University NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E06000001
+</td>
+<td style="text-align:left;">
+Hartlepool
+</td>
+<td style="text-align:right;">
+0.0015084
+</td>
+<td style="text-align:right;">
+0.0275229
+</td>
 </tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000009</td>
-<td align="left">Trafford</td>
-<td align="right">0.3087296</td>
+<tr>
+<td style="text-align:left;">
+RVW
+</td>
+<td style="text-align:left;">
+North Tees And Hartlepool NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E06000001
+</td>
+<td style="text-align:left;">
+Hartlepool
+</td>
+<td style="text-align:right;">
+0.3576642
+</td>
+<td style="text-align:right;">
+0.7192661
+</td>
 </tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000007</td>
-<td align="left">Stockport</td>
-<td align="right">0.0723918</td>
+<tr>
+<td style="text-align:left;">
+RXF
+</td>
+<td style="text-align:left;">
+Mid Yorkshire Hospitals NHS Trust
+</td>
+<td style="text-align:left;">
+E06000001
+</td>
+<td style="text-align:left;">
+Hartlepool
+</td>
+<td style="text-align:right;">
+0.0158548
+</td>
+<td style="text-align:right;">
+0.2532110
+</td>
 </tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E06000049</td>
-<td align="left">Cheshire East</td>
-<td align="right">0.0411639</td>
+<tr>
+<td style="text-align:left;">
+RTR
+</td>
+<td style="text-align:left;">
+South Tees Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E06000002
+</td>
+<td style="text-align:left;">
+Middlesbrough
+</td>
+<td style="text-align:right;">
+0.4593438
+</td>
+<td style="text-align:right;">
+0.6694387
+</td>
 </tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000008</td>
-<td align="left">Tameside</td>
-<td align="right">0.0290987</td>
+<tr>
+<td style="text-align:left;">
+RVW
+</td>
+<td style="text-align:left;">
+North Tees And Hartlepool NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E06000002
+</td>
+<td style="text-align:left;">
+Middlesbrough
+</td>
+<td style="text-align:right;">
+0.0383212
+</td>
+<td style="text-align:right;">
+0.0873181
+</td>
 </tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000004</td>
-<td align="left">Oldham</td>
-<td align="right">0.0163236</td>
-</tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E10000017</td>
-<td align="left">Lancashire</td>
-<td align="right">0.0120653</td>
-</tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000002</td>
-<td align="left">Bury</td>
-<td align="right">0.0085167</td>
-</tr>
-<tr class="odd">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000005</td>
-<td align="left">Rochdale</td>
-<td align="right">0.0085167</td>
-</tr>
-<tr class="even">
-<td align="left">R0A</td>
-<td align="left">Manchester University NHS Foundation Trust</td>
-<td align="left">E08000006</td>
-<td align="left">Salford</td>
-<td align="right">0.0078070</td>
+<tr>
+<td style="text-align:left;">
+RXF
+</td>
+<td style="text-align:left;">
+Mid Yorkshire Hospitals NHS Trust
+</td>
+<td style="text-align:left;">
+E06000002
+</td>
+<td style="text-align:left;">
+Middlesbrough
+</td>
+<td style="text-align:right;">
+0.0134421
+</td>
+<td style="text-align:right;">
+0.2432432
+</td>
 </tr>
 </tbody>
 </table>
+<p>Summarise the mapping with <code><a href="../reference/summarise_mapping.html">summarise_mapping()</a></code>. For an NHS Trust (specified by the argument <code>trust</code>), this will return a table and a visualisation, both describing <code>p_trust</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">summary</span><span class="op">$</span><span class="va">summary_plot</span></code></pre></div>
-<p><img src="mapping_summary_files/figure-html/summarise%20for%20trust-1.png" width="768"></p>
-<p>Summarise the mapping for a given local authority (as defined <code>geography</code>, either a UTLA or LTLA code) with <code><a href="../reference/summarise_mapping.html">summarise_mapping()</a></code>; this will return a table (under <code>summary_table</code>):</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="va">trust_utla_mapping</span>, geography <span class="op">=</span> <span class="st">"E09000012"</span><span class="op">)</span>
-
-<span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="10%">
-<col width="9%">
-<col width="11%">
-<col width="58%">
-<col width="10%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">geo_code</th>
-<th align="left">geo_name</th>
-<th align="left">trust_code</th>
-<th align="left">trust_name</th>
-<th align="right">p_geo</th>
+<code class="sourceCode R"><span><span class="va">mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_mapping.html">load_mapping</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"ltla"</span>, source <span class="op">=</span> <span class="st">"link"</span><span class="op">)</span></span>
+<span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>trust <span class="op">=</span> <span class="st">"RYR"</span>,</span>
+<span>                             mapping <span class="op">=</span> <span class="va">mapping</span>,</span>
+<span>                             shapefile <span class="op">=</span> <span class="va">england_ltla_shape</span>,</span>
+<span>                             geo_names <span class="op">=</span> <span class="va">ltla_names</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable_styling</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">
+trust_code
+</th>
+<th style="text-align:left;">
+trust_name
+</th>
+<th style="text-align:left;">
+geo_code
+</th>
+<th style="text-align:left;">
+geo_name
+</th>
+<th style="text-align:right;">
+p_trust
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">E09000012</td>
-<td align="left">Hackney</td>
-<td align="left">RQX</td>
-<td align="left">Homerton University Hospital NHS Foundation Trust</td>
-<td align="right">0.6753472</td>
+<tr>
+<td style="text-align:left;">
+RYR
+</td>
+<td style="text-align:left;">
+Western Sussex Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E07000224
+</td>
+<td style="text-align:left;">
+Arun
+</td>
+<td style="text-align:right;">
+0.3718887
+</td>
 </tr>
-<tr class="even">
-<td align="left">E09000012</td>
-<td align="left">Hackney</td>
-<td align="left">R1H</td>
-<td align="left">Barts Health NHS Trust</td>
-<td align="right">0.2135417</td>
+<tr>
+<td style="text-align:left;">
+RYR
+</td>
+<td style="text-align:left;">
+Western Sussex Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E07000229
+</td>
+<td style="text-align:left;">
+Worthing
+</td>
+<td style="text-align:right;">
+0.2020498
+</td>
 </tr>
-<tr class="odd">
-<td align="left">E09000012</td>
-<td align="left">Hackney</td>
-<td align="left">RRV</td>
-<td align="left">University College London Hospitals NHS Foundation Trust</td>
-<td align="right">0.0677083</td>
+<tr>
+<td style="text-align:left;">
+RYR
+</td>
+<td style="text-align:left;">
+Western Sussex Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E07000225
+</td>
+<td style="text-align:left;">
+Chichester
+</td>
+<td style="text-align:right;">
+0.1991215
+</td>
 </tr>
-<tr class="even">
-<td align="left">E09000012</td>
-<td align="left">Hackney</td>
-<td align="left">RKE</td>
-<td align="left">Whittington Health NHS Trust</td>
-<td align="right">0.0434028</td>
+<tr>
+<td style="text-align:left;">
+RYR
+</td>
+<td style="text-align:left;">
+Western Sussex Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E07000223
+</td>
+<td style="text-align:left;">
+Adur
+</td>
+<td style="text-align:right;">
+0.1185944
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RYR
+</td>
+<td style="text-align:left;">
+Western Sussex Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E07000227
+</td>
+<td style="text-align:left;">
+Horsham
+</td>
+<td style="text-align:right;">
+0.0805271
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RYR
+</td>
+<td style="text-align:left;">
+Western Sussex Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:left;">
+E06000043
+</td>
+<td style="text-align:left;">
+Brighton and Hove
+</td>
+<td style="text-align:right;">
+0.0278184
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">summary</span><span class="op">$</span><span class="va">summary_plot</span></span></code></pre></div>
+<p><img src="mapping_summary_files/figure-html/summarise%20for%20trust-1.png" width="768"></p>
+<p>For a local authority (specified by the argument <code>geography</code>), this will return a table describing <code>p_trust</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_mapping.html">summarise_mapping</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"E09000012"</span>,</span>
+<span>                             mapping <span class="op">=</span> <span class="va">mapping</span>,</span>
+<span>                             shapefile <span class="op">=</span> <span class="va">england_ltla_shape</span>,</span>
+<span>                             geo_names <span class="op">=</span> <span class="va">ltla_names</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">summary</span><span class="op">$</span><span class="va">summary_table</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">kable_styling</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">
+geo_code
+</th>
+<th style="text-align:left;">
+geo_name
+</th>
+<th style="text-align:left;">
+trust_code
+</th>
+<th style="text-align:left;">
+trust_name
+</th>
+<th style="text-align:right;">
+p_geo
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+E09000012
+</td>
+<td style="text-align:left;">
+Hackney
+</td>
+<td style="text-align:left;">
+RQX
+</td>
+<td style="text-align:left;">
+Homerton University Hospital NHS Foundation Trust
+</td>
+<td style="text-align:right;">
+0.4957699
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E09000012
+</td>
+<td style="text-align:left;">
+Hackney
+</td>
+<td style="text-align:left;">
+R1H
+</td>
+<td style="text-align:left;">
+Barts Health NHS Trust
+</td>
+<td style="text-align:right;">
+0.2233503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E09000012
+</td>
+<td style="text-align:left;">
+Hackney
+</td>
+<td style="text-align:left;">
+RAJ
+</td>
+<td style="text-align:left;">
+Mid And South Essex NHS Foundation Trust
+</td>
+<td style="text-align:right;">
+0.1336717
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E09000012
+</td>
+<td style="text-align:left;">
+Hackney
+</td>
+<td style="text-align:left;">
+RWE
+</td>
+<td style="text-align:left;">
+University Hospitals Of Leicester NHS Trust
+</td>
+<td style="text-align:right;">
+0.0490694
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E09000012
+</td>
+<td style="text-align:left;">
+Hackney
+</td>
+<td style="text-align:left;">
+RKE
+</td>
+<td style="text-align:left;">
+Whittington Health NHS Trust
+</td>
+<td style="text-align:right;">
+0.0439932
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E09000012
+</td>
+<td style="text-align:left;">
+Hackney
+</td>
+<td style="text-align:left;">
+RXF
+</td>
+<td style="text-align:left;">
+Mid Yorkshire Hospitals NHS Trust
+</td>
+<td style="text-align:right;">
+0.0355330
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E09000012
+</td>
+<td style="text-align:left;">
+Hackney
+</td>
+<td style="text-align:left;">
+RRV
+</td>
+<td style="text-align:left;">
+University College London Hospitals NHS Foundation Trust
+</td>
+<td style="text-align:right;">
+0.0186125
+</td>
 </tr>
 </tbody>
 </table>
@@ -493,12 +714,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
+<p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, Hannah Choi, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

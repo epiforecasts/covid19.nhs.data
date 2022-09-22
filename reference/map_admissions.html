@@ -27,7 +27,7 @@ latest data provided."><meta property="og:image" content="epiforecasts.io/covid1
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -36,7 +36,7 @@ latest data provided."><meta property="og:image" content="epiforecasts.io/covid1
       <a href="../articles/create_public_mapping.html">Creating the public mappings</a>
     </li>
     <li>
-      <a href="../articles/mapping_summary.html">Trust to local authority mapping overview</a>
+      <a href="../articles/mapping_summary.html">Overview of LTLA- and UTLA-Trust COVID-19 mappings</a>
     </li>
   </ul></li>
 <li>
@@ -67,28 +67,37 @@ latest data provided."><meta property="og:image" content="epiforecasts.io/covid1
 latest data provided.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">map_admissions</span><span class="op">(</span><span class="va">admissions</span>, <span class="va">shapefile</span>, <span class="va">date</span>, <span class="va">scale_fill</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map_admissions</span><span class="op">(</span><span class="va">admissions</span>, <span class="va">shapefile</span>, <span class="va">date</span>, <span class="va">scale_fill</span><span class="op">)</span></span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>admissions</dt>
 <dd><p>A data.frame of admissions data as produced by <code>get_dadmissions</code>.
 Must contain the following variables: <code>geo_code</code>, <code>date</code>, and <code>admissions</code></p></dd>
+
+
 <dt>shapefile</dt>
 <dd><p>A shapefile defaults to <code>england_utla_shape</code> if not supplied.</p></dd>
+
+
 <dt>date</dt>
 <dd><p>A date variable (or vector) indicating when to plot data for. If
 set to <code>NULL</code> then no date filter is applied</p></dd>
+
+
 <dt>scale_fill</dt>
 <dd><p>A <code>ggplot2</code> <code>scale_fill</code> used to define the fill colours
 used in the map. The default is:
 <code>scale_fill_viridis_c(option = "viridis", direction = -1, na.value = "grey80")</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A map of Covid-19 admissions in England</p>
-    </div>
+    
+
+<p>A map of Covid-19 admissions in England</p>
     </div>
 
   </div>
@@ -99,11 +108,11 @@ used in the map. The default is:
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
+  <p></p><p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, Hannah Choi, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

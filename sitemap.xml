@@ -46,6 +46,9 @@
     <loc>epiforecasts.io/covid19.nhs.data/reference/index.html</loc>
   </url>
   <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/load_mapping.html</loc>
+  </url>
+  <url>
     <loc>epiforecasts.io/covid19.nhs.data/reference/ltla_names.html</loc>
   </url>
   <url>
@@ -59,6 +62,9 @@
   </url>
   <url>
     <loc>epiforecasts.io/covid19.nhs.data/reference/trust_ltla_mapping.html</loc>
+  </url>
+  <url>
+    <loc>epiforecasts.io/covid19.nhs.data/reference/trust_mergers.html</loc>
   </url>
   <url>
     <loc>epiforecasts.io/covid19.nhs.data/reference/trust_names.html</loc>

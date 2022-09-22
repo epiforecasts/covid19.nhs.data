@@ -27,7 +27,7 @@ graphically and in a table."><meta property="og:image" content="epiforecasts.io/
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -36,7 +36,7 @@ graphically and in a table."><meta property="og:image" content="epiforecasts.io/
       <a href="../articles/create_public_mapping.html">Creating the public mappings</a>
     </li>
     <li>
-      <a href="../articles/mapping_summary.html">Trust to local authority mapping overview</a>
+      <a href="../articles/mapping_summary.html">Overview of LTLA- and UTLA-Trust COVID-19 mappings</a>
     </li>
   </ul></li>
 <li>
@@ -67,36 +67,46 @@ graphically and in a table."><meta property="og:image" content="epiforecasts.io/
 graphically and in a table.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">summarise_mapping</span><span class="op">(</span>
-  trust <span class="op">=</span> <span class="cn">NULL</span>,
-  geography <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">mapping</span>,
-  <span class="va">shapefile</span>,
-  <span class="va">geo_names</span>
-<span class="op">)</span></code></pre></div>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarise_mapping</span><span class="op">(</span></span>
+<span>  trust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  geography <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">mapping</span>,</span>
+<span>  <span class="va">shapefile</span>,</span>
+<span>  <span class="va">geo_names</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>trust</dt>
 <dd><p>A character string indicating a trust of interest.</p></dd>
+
+
 <dt>geography</dt>
 <dd><p>A character string indicating the geography of interest. Only used if
 <code>trust</code> is not specified. Related to the mapping used so for <code>trust_utla_mapping</code>
 refers to a UTLA.</p></dd>
+
+
 <dt>mapping</dt>
-<dd><p>data.frame containing trust_code, p_trust, geo_code and p_geo.
-Defaults to <code>trust_utla_mapping</code> if not supplied.</p></dd>
+<dd><p>A data.frame containing geo_code, trust_code, p_geo and p_trust.</p></dd>
+
+
 <dt>shapefile</dt>
 <dd><p>A shapefile defaults to <code>england_utla_shape</code> if not supplied.</p></dd>
+
+
 <dt>geo_names</dt>
-<dd><p>A dataframe containing <code>geo_code</code> and <code>geo_name</code>. Used to
+<dd><p>A data.frame containing <code>geo_code</code> and <code>geo_name</code>. Used to
 assign meaningful to geographies.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A table and optional map summarising the admissions mapping.</p>
-    </div>
+    
+
+<p>A table and optional map summarising the admissions mapping.</p>
     </div>
 
   </div>
@@ -107,11 +117,11 @@ assign meaningful to geographies.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
+  <p></p><p>Developed by <a href="https://www.lshtm.ac.uk/aboutus/people/meakin.sophie" class="external-link">Sophie Meakin</a>, <a href="https://www.samabbott.co.uk/" class="external-link">Sam Abbott</a>, Hannah Choi, <a href="https://www.lshtm.ac.uk/aboutus/people/funk.sebastian" class="external-link">Sebastian Funk</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
