@@ -41,7 +41,6 @@ and load the library:
 
 ```{r package, echo = TRUE, eval = TRUE}
 library(covid19.nhs.data)
-library(kableExtra)
 ```
 
 ## Access the mappings
