@@ -44,6 +44,7 @@ reference:
       - contains("ltla_mapping")
       - contains("_names")
       - contains("_shape")
+      - trust_mergers
   - title: Utilities
     desc: Utility functions.
     contents:
