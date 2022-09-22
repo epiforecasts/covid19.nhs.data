@@ -12,6 +12,13 @@ vignette: >
 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
+pacman::p_load(
+  magrittr,
+  dplyr,
+  knitr,
+  kableExtra
+)
+
 ```
 
 # Summary
