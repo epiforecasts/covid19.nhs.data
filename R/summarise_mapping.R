@@ -15,18 +15,23 @@
 #' @export
 summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile, geo_names) {
   
+  # Trust/geography checks
   if (is.null(trust) & is.null(geography)) { 
     stop("Either a trust or a geography must be specified")
   }
   
-  if (missing(shapefile)){
-    shapefile <- covid19.nhs.data::england_utla_shape
-  }
+  # Mapping checks
   if (missing(mapping)) {
-    mapping <- covid19.nhs.data::trust_utla_mapping
-  }
-  if (missing(geo_names)) {
-    geo_names <- covid19.nhs.data::utla_names
+    stop("Missing mapping - please specify a LTLA- or UTLA-Trust mapping.")
+  } else {
+    # Shapefile checks
+    if (missing(shapefile)) {
+      stop("Missing shapefile - please specify an appropriate shapefile.")
+    }
+    # Geography names checks
+    if (missing(geo_names)) {
+      stop("Missing geo_names - please specify appropriate geography names.")
+    }
   }
   
   if(!is.null(trust)){
@@ -71,7 +76,7 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
   } else if (!is.null(geography)){
     
     geography <- toupper(geography)
-  
+    
     ## Table summary of mapping
     tb <- mapping %>% 
       filter(geo_code == geography) %>% 
@@ -82,4 +87,3 @@ summarise_mapping <- function(trust = NULL, geography = NULL, mapping, shapefile
     return(list(summary_table = tb))
   }
 }
-

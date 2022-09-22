@@ -1,7 +1,7 @@
 ---
 title: "Creating the public mappings"
 author: "Sophie Meakin"
-date:  "2021-01-21"
+date:  `r format.Date(Sys.Date(), "%d %B %Y")`
 output: html_document
 vignette: >
   %\VignetteIndexEntry{Creating the public mappings}
@@ -13,138 +13,73 @@ vignette: >
 
 knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE)
 
-```
+pacman::p_load(
+  magrittr,
+  dplyr,
+  knitr,
+  kableExtra
+)
 
-*Note: The code presented in this vignette is for indicative purposes only as generating the mapping requires confidential data. If you have access to the raw data save it as `data-raw/trust-ltla-mapping/mapping_raw.csv` in the package repository and then run this code to regenerate the mapping.*
+```
 
 # Aim
 
-To create a public (anonymised) mapping between NHS Trusts and local authorities in England based on COVID-19 admissions.
+To create a public (anonymised) mapping between lower- or upper-tier local authorities and Acute NHS Trusts in England based on COVID-19 hospital admissions data.
 
 # Summary
 
-The raw mapping, provided by NHS England, is a mapping between NHS sites (e.g. hospitals) and lower-tier local authorities (LTLAs). In summary, to create the public mappings, we:
+We make mappings based on two data sources: Secondary Uses Service (SUS) healthcare data for England, and linked COVID-19 cases and admissions. The steps taken to make each mapping are summarised below; see `data-raw/make_mappings.R` for full details.
 
-1. Map NHS sites to NHS Trusts.
-2. Summarise the mapping by Trust and LTLA (or UTLA).
-3. Exclude any Trust-LTLA pairs (or Trust-UTLA pairs) where the number of spells is less than 10.
-4. Summarise the mapping to keep (i) `p_trust`, the proportion of admissions at a given Trust that come from a given LTLA (or UTLA), and (ii) `p_geo`, the proportion of admissions from a given LTLA (or UTLA) that go to a given Trust.
+## Secondary Uses Service (SUS) mapping
 
+Mappings are derived from a raw mapping provided by NHS England, based on the Secondary Uses Service (SUS) healthcare data for England. This raw mapping counts the number of COVID-19 hospital spells (discharges) between 01 January 2020 and 30 September 2020 from NHS hospitals to lower-tier local authorities (LTLAs). To make the public mappings, we:
+
+1.  Map NHS sites to NHS Trusts.
+2.  Count the number of hospital spells for each LTLA-Trust (or UTLA-Trust) pair.
+3.  Exclude any LTLA-Trust (or UTLA-Trust) pairs for which the number of hospital spells is fewer than 10.
+4.  Calculate (i) `p_geo`, the proportion of all admissions from a given LTLA (or UTLA) that were admitted to a given Trust, and (ii) `p_trust`, the proportion of all admissions to a given Trust that were admitted from a given LTLA (or UTLA).
+
+## Linked COVID-19 cases and admissions
+
+Mappings are derived from COVID-19 cases and hospital admissions linelist data linked via a case ID. The case data includes the following variables: case ID, age, sex, resident LTLA, residence type (residential, HMO, care home, medical facility, prison, other, unknown), test specimen date. The hospital admissions data includes the following variables: case ID, age, sex, specimen date, NHS Trust, Trust type (acute, independent, mental health, community), admission date, discharge date. To make the public mappings, we:
+
+1.  Clean case linelist. Exclude any cases for which any of the following variables are missing: resident LTLA or residence type. Exclude any cases not from residential dwellings (including houses, flats, sheltered accommodation), as defined by the residence type.
+2.  Clean hospital admissions linelist. Exclude any cases for which any of the following variables are missing: NHS trust, admission date, discharge date.
+3.  Link cleaned case and admissions linelist data via case ID.
+4.  Exclude any matched case-admission pairs where the discharge date was before the specimen (test) date (i.e. exclude admissions that were discharged before a positive SARS-CoV-2 diagnosis), or any admissions where the admission date was more than 28 days after the specimen date (i.e. exclude admissions that likely occurred after illness and may be unrelated).
+5.  Amongst all remaining matches, keep the first admission of each case only.
+6.  Count the number of linked case-admissions for each LTLA-Trust (or UTLA-Trust) combination.
+7.  Exclude any LTLA-Trust (or UTLA-Trust) pairs for which the number of hospital spells is fewer than 10.
+8.  Calculate (i) `p_geo`, the proportion of all admissions from a given LTLA (or UTLA) that were admitted to a given Trust, and (ii) `p_trust`, the proportion of all admissions to a given Trust that were admitted from a given LTLA (or UTLA).
+
+
+## Local authority and Trust mergers
+
+The mapping includes the following local authority (LA) mergers that have taken place since January 2020:
 
 ```{r}
-library(readr)
-library(dplyr)
-library(janitor)
-library(usethis)
+
+hospitalcatchment.utils::la_changes %>%
+  filter(substr(la_level, 1, 1) == "E",
+         from_date > as.Date("2019-12-31")) %>%
+  mutate(Change = ifelse(is.na(la_code_new), "Abolished", "Merged")) %>%
+  arrange(from_date, la_code_new) %>%
+  select(`Old LA code` = la_code,
+         `New LA code` = la_code_new,
+         Change,
+         `Date effective` = from_date)
+
 ```
 
+The mapping includes the following Trust mergers that have taken place since January 2020:
 
-```{r load_data}
-# Site-Trust lookup
-trust_lookup <- readr::read_csv(file = here::here("data-raw", "raw", "england_trusts", "trust_list.csv"),
-                            col_names = FALSE) %>%
-  dplyr::select(trust_code = X1, stp_code = X4) %>%
-  unique()
+```{r}
 
-# Trust mergers
-trust_mergers <- readr::read_csv(file = here::here("data-raw", "raw", "england_trusts", "trust_mergers.csv"), col_names = TRUE) %>%
-dplyr::filter(from_date < Sys.Date())
+hospitalcatchment.utils::download_nhs_mergers() %>%
+  filter(!(org_code_old == "RW6" & org_code == "R0A")) %>%
+  select(`Old Trust code` = org_code_old,
+         `New Trust code` = org_code,
+         `Date effective` = date_effective) %>%
+  kable()
 
-
-# LTLA-UTLA lookup
-ltla_lookup <- readr::read_csv(file = here::here("data-raw", "raw", "england_ltla", "ltla_utla_list.csv"),
-                               col_names = TRUE) %>%
-  dplyr::select(ltla_code = LTLA19CD, utla_code = UTLA19CD)
-
-# NHS site-LTLA mapping
-nhs_mapping_raw <- readr::read_csv(file = here::here("data-raw", "trust-ltla-mapping", "mapping_raw.csv")) %>%
-  janitor::clean_names() %>%
-  dplyr::rename(site_code = der_provider_site_code,
-                ltla_code = der_postcode_dist_unitary_auth,
-                n = spells)
-```
-
-
-```{r make_trust-ltla_raw_mapping}
-# Create clean LTLA-Trust counts (get Trust ID, add Trust mergers)
-nhs_mapping_top <- nhs_mapping_raw %>%
-  dplyr::mutate(trust_code = stringr::str_sub(site_code, 1, 3)) %>%
-  dplyr::left_join(trust_mergers, by = c("trust_code" = "trust_code_old")) %>%
-  dplyr::mutate(trust_code = ifelse(!is.na(trust_code_new), trust_code_new, trust_code)) %>%
-  dplyr::group_by(trust_code, ltla_code) %>%
-  dplyr::summarise(n = sum(n, na.rm = TRUE),
-                   .groups = "drop") %>%
-  dplyr::select(trust_code, ltla_code, n)
-```
-
-
-```{r make_trust-utla_mapping}
-##### Create UTLA-Trust mapping #####
-nhs_mapping <- nhs_mapping_top %>%
-  dplyr::left_join(ltla_lookup, by = "ltla_code") %>%
-  dplyr::group_by(trust_code, geo_code = utla_code) %>%
-  dplyr::summarise(n = sum(n),
-                   .groups = "drop") %>%
-  # Drop Trust-LTLA pairs where n < 10
-  dplyr::filter(n >= 10)
-
-# Create p_trust and p_ltla
-nhs_mapping_trust <- nhs_mapping %>%
-  dplyr::group_by(trust_code) %>%
-  dplyr::mutate(p_trust = n/sum(n)) %>% 
-  dplyr::select(-n)
-
-nhs_mapping_utla <- nhs_mapping %>%
-  dplyr::group_by(geo_code) %>%
-  dplyr::mutate(p_geo = n/sum(n)) %>% 
-  dplyr::select(-n)
-
-# Output final UTLA-Trust mapping
-trust_utla_public <- nhs_mapping_trust %>%
-  dplyr::left_join(nhs_mapping_utla, by = c("trust_code", "geo_code"))
-```
-
-
-```{r make_trust-ltla_mapping}
-##### Create LTLA-Trust mapping #####
-nhs_mapping <- nhs_mapping_top %>%
-  dplyr::rename(geo_code = ltla_code) %>%
-  # Drop Trust-LTLA pairs where n < 10
-  dplyr::filter(n >= 10)
-
-# Create p_trust and p_ltla
-nhs_mapping_trust <- nhs_mapping %>%
-  dplyr::group_by(trust_code) %>%
-  dplyr::mutate(p_trust = n/sum(n)) %>% 
-  dplyr::select(-n)
-
-nhs_mapping_ltla <- nhs_mapping %>%
-  dplyr::group_by(geo_code) %>%
-  dplyr::mutate(p_geo = n/sum(n)) %>% 
-  dplyr::select(-n)
-
-# Output final LTLA-Trust mapping
-trust_ltla_public <- nhs_mapping_trust %>%
-  dplyr::left_join(nhs_mapping_ltla, by = c("trust_code", "geo_code"))
-```
-
-
-```{r save_mappings}
-# Save public mappings
-saveRDS(object = trust_ltla_public,
-        file = here::here("data-raw", "trust-ltla-mapping", "trust_ltla_mapping_public.rds"))
-readr::write_csv(x = trust_ltla_public,
-                 path = here::here("data-raw", "trust-ltla-mapping", "trust_ltla_mapping_public.csv"))
-
-saveRDS(object = trust_utla_public,
-        file = here::here("data-raw", "trust-ltla-mapping", "trust_utla_mapping_public.rds"))
-readr::write_csv(x = trust_utla_public,
-                 path = here::here("data-raw", "trust-ltla-mapping", "trust_utla_mapping_public.csv"))
-
-# Add public mappings to R package
-trust_utla_mapping <- trust_utla_public
-usethis::use_data(trust_utla_mapping,  overwrite = TRUE)
-
-trust_ltla_mapping <- trust_ltla_public
-usethis::use_data(trust_ltla_mapping,  overwrite = TRUE)
 ```
