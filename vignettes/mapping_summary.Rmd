@@ -62,7 +62,7 @@ Add Trust names and local authority names to the raw mapping with `get_names()`:
 ```{r add_names, echo = TRUE, eval = TRUE}
 
 load_mapping(scale = "ltla", source = "link") %>%
-  get_names() %>%
+  get_names(geo_names = ltla_names) %>%
   head() %>%
   kable() %>%
   kable_styling()
