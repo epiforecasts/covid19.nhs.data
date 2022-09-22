@@ -32,6 +32,10 @@ reference:
     contents:
       - download_trust_data
       - get_admissions
+  - title: Load mappings
+    desc: Functions to load the mappings
+    contents:
+      - load_mapping
   - title: Summarise Data
     desc: Functions for summarising downloaded datasets.
     contents:
