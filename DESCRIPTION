@@ -52,5 +52,7 @@ Suggests:
     usethis,
     rmarkdown,
     readr,
-    covr
+    covr,
+    kableExtra,
+    pacman
 VignetteBuilder: knitr

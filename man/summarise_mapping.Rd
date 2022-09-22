@@ -19,12 +19,11 @@ summarise_mapping(
 \code{trust} is not specified. Related to the mapping used so for \code{trust_utla_mapping}
 refers to a UTLA.}
 
-\item{mapping}{data.frame containing trust_code, p_trust, geo_code and p_geo.
-Defaults to \code{trust_utla_mapping} if not supplied.}
+\item{mapping}{A data.frame containing geo_code, trust_code, p_geo and p_trust.}
 
 \item{shapefile}{A shapefile defaults to \code{england_utla_shape} if not supplied.}
 
-\item{geo_names}{A dataframe containing \code{geo_code} and \code{geo_name}. Used to
+\item{geo_names}{A data.frame containing \code{geo_code} and \code{geo_name}. Used to
 assign meaningful to geographies.}
 }
 \value{

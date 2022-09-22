@@ -32,6 +32,10 @@ reference:
     contents:
       - download_trust_data
       - get_admissions
+  - title: Load mappings
+    desc: Functions to load the mappings
+    contents:
+      - load_mapping
   - title: Summarise Data
     desc: Functions for summarising downloaded datasets.
     contents:
@@ -44,6 +48,7 @@ reference:
       - contains("ltla_mapping")
       - contains("_names")
       - contains("_shape")
+      - trust_mergers
   - title: Utilities
     desc: Utility functions.
     contents:

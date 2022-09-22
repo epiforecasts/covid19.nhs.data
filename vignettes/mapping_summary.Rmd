@@ -12,6 +12,13 @@ vignette: >
 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
+pacman::p_load(
+  magrittr,
+  dplyr,
+  knitr,
+  kableExtra
+)
+
 ```
 
 # Summary
@@ -33,7 +40,7 @@ These mappings can be used to estimate COVID-19 hospital admissions at the local
 
 Install the package from GitHub:
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, eval = FALSE}
 devtools::install_github("epiforecasts/covid19.nhs.data")
 ```
 
@@ -61,7 +68,7 @@ Add Trust names and local authority names to the raw mapping with `get_names()`:
 ```{r add_names, echo = TRUE, eval = TRUE}
 
 load_mapping(scale = "ltla", source = "link") %>%
-  get_names() %>%
+  get_names(geo_names = ltla_names) %>%
   head() %>%
   kable() %>%
   kable_styling()
