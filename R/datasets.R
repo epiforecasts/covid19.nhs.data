@@ -1,17 +1,3 @@
-#' Mapping Between NHS Trust and LTLA
-#'
-#'
-#' @name trust_ltla_mapping
-#' @docType data
-"trust_ltla_mapping"
-
-#' Mapping Between NHS Trust and UTLA
-#'
-#'
-#' @name trust_utla_mapping
-#' @docType data
-"trust_utla_mapping"
-
 #' Linking File Between NHS Trust Codes and Names
 #'
 #'
