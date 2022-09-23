@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   create_public_mapping: create_public_mapping.html
   mapping_summary: mapping_summary.html
-last_built: 2022-09-23T09:27Z
+last_built: 2022-09-23T09:56Z
 urls:
   reference: epiforecasts.io/covid19.nhs.data/reference
   article: epiforecasts.io/covid19.nhs.data/articles
