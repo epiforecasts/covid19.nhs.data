@@ -12,9 +12,7 @@ NULL
 
 globalVariables(
   c(
-    "admissions", "data", "ltla_code", "org_code", "p", "p_trust", "p_utla",
-    "trust_code", "trust_ltla_mapping", "trust_name", "trust_names",
-    "trust_utla_mapping", "type1_acute", "geo_code", "geo_name", "geo_names",
-    "england_utla_shape", "value", "p_geo", "utla_names"
+    "data", "geo_code", "geo_name", "map_level", "map_source", "new_adm", "nhs_region",
+    "org_code", "p", "p_geo", "p_trust", "trust_code", "trust_name", "value", "var", "var_name"
   )
 )
