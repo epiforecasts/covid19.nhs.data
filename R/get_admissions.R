@@ -41,9 +41,11 @@ get_admissions <- function(keep_vars = "new_adm",
   # Check mapping
   if (missing(mapping)) {
     if (level %in% "utla") {
-      mapping <- covid19.nhs.data::trust_utla_mapping
+      mapping <- covid19.nhs.data::load_mapping(scale = "utla",
+                                                source = "link")
     } else if (level %in% "ltla") {
-      mapping <- covid19.nhs.data::trust_ltla_mapping
+      mapping <- covid19.nhs.data::load_mapping(scale = "ltla",
+                                                source = "link")
     }
   }
   
